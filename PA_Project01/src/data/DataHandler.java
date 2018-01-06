@@ -5,8 +5,8 @@
  */
 package data;
 
-import data.dao.dao_json.UserDAOJSON;
-import data.dao.dao_json.MachineDAOJSON;
+import data.dao.json.UserDAOJSON;
+import data.dao.json.MachineDAOJSON;
 import game.models.ComputerGame;
 import game.models.Game;
 import game.models.Player;

@@ -1,6 +1,6 @@
 package game.models;
 
-import data.dao.dao_json.UserDAOJSON;
+import data.dao.json.UserDAOJSON;
 
 /** This class represents an User. It extends from Player, allowing it to take
  * part in games and make a distinction between human players and the 

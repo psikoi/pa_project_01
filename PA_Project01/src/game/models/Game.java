@@ -1,7 +1,7 @@
 package game.models;
 
 import data.DataHandler;
-import data.dao.dao_json.UserDAOJSON;
+import data.dao.json.UserDAOJSON;
 import game.GameSystem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

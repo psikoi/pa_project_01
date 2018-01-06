@@ -3,6 +3,7 @@ package game;
 import data.DataHandler;
 import data.dao.json.*;
 import data.dao.serialization.*;
+import data.dao.sqlite.*;
 import game.models.ComputerGame;
 import game.models.Game;
 import game.models.Machine;
@@ -23,7 +24,7 @@ public class GameSystem {
 
         dimensions = new Dimension(600, 600);
         
-        DataHandler.setDao(new UserDAOJSON(), new MachineDAOJSON());
+        DataHandler.setDao(new UserDAOSQLite(), new MachineDAOSQLite());
 
         User user = new User("Ruben", "123", "ruben.amendoeira@gmail.com");
         User user2 = new User("Tiago", "123", "tiago.afsantos@hotmail.com");
@@ -40,10 +41,6 @@ public class GameSystem {
         
         
         gameController = new GameController(game);
-        
-        
-
-
     }
     
     public static void refresh(){

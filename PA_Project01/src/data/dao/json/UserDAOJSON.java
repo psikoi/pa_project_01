@@ -152,7 +152,7 @@ public final class UserDAOJSON implements UserDAO{
                 Gson gson = new GsonBuilder().create();
 
                 readMap = gson.fromJson(br, new TypeToken<Map<String, User>>(){}.getType());
-
+                
                 return readMap;
             } catch (IOException e) {
                 System.out.println(e.getMessage());

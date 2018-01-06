@@ -34,10 +34,10 @@ public final class MachineDAOJSON implements MachineDAO{
     
     private final static String MACHINE_FILE = "machine.json";
 
-    private Machine data;
+    private Map<String, Machine> data;
 
     private MachineDAOJSON() {
-        this.data = loadAll();
+       this.data = loadAll();
     }
     
     public static MachineDAOJSON getInstance(){
@@ -48,16 +48,16 @@ public final class MachineDAOJSON implements MachineDAO{
     }
 
     @Override
-    public Machine select() {
-        return data;
+   public Machine select() {
+       return data.get("Machine");
     }
 
     @Override
     public boolean insert(Machine machine) {
-        if(machine != null)
+        if(!data.isEmpty())
             return false;
         
-        data = machine;
+        data.put("Machine", machine);
         
         save();
         
@@ -66,11 +66,13 @@ public final class MachineDAOJSON implements MachineDAO{
 
     @Override
     public boolean addGamePlayed() {
-        if(data == null)
+        Machine machine = data.get("Machine");
+        if(machine == null)
             return false;
         
-        data.addGamePlayed();
+        machine.addGamePlayed();
         
+        data.replace("Machine", machine);
         save();
         
         return true;
@@ -78,22 +80,25 @@ public final class MachineDAOJSON implements MachineDAO{
 
     @Override
     public boolean addVictory() {
-        if(data == null)
+        Machine machine = data.get("Machine");
+        if(machine == null){
             return false;
+        }
         
-        data.addVictory();
+        machine.addVictory();
         
+        data.replace("Machine", machine);
         save();
         
         return true;
     }
     
-    private Machine loadAll() {
+    private Map<String, Machine> loadAll() {
         File file = new File(MACHINE_FILE);
 
         if (!file.exists()) {
-            return null;
-        } else {
+            return new HashMap<>();
+         } else {
             try {
                 Map<String, Machine> readMap;
                 
@@ -102,16 +107,15 @@ public final class MachineDAOJSON implements MachineDAO{
 
                 readMap = gson.fromJson(br, new TypeToken<Map<String, Machine>>(){}.getType());
 
-                for(Machine m : readMap.values()){
-                    return m;
-                }
+                
+                return readMap;
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE, e.getMessage());
             }
-        }
+       }
 
-        return null;
+        return new HashMap<>();
     }
     
     private void save() {

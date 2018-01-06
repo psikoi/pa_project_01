@@ -16,7 +16,7 @@ import tads.graph.model.Joint;
  */
 
 public class Machine extends Player {
-
+    
     /**
      * Selects a random edge on the board. 
      * 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package data.dao;
 
 import game.models.Machine;
 import java.util.List;

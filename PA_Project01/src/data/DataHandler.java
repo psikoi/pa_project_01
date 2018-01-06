@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package data;
 
+import data.dao.dao_json.UserDAOJSON;
+import data.dao.dao_json.MachineDAOJSON;
 import game.models.ComputerGame;
 import game.models.Game;
-import game.models.Machine;
 import game.models.Player;
 import game.models.User;
 

@@ -1,8 +1,8 @@
 package game;
 
-import dao.DataHandler;
-import dao.MachineDAOJSON;
-import dao.UserDAOJSON;
+import data.DataHandler;
+import data.dao.dao_json.MachineDAOJSON;
+import data.dao.dao_json.UserDAOJSON;
 import game.models.ComputerGame;
 import game.models.Game;
 import game.models.Machine;

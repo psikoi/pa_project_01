@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package data.dao.dao_json;
 
+import data.dao.UserDAO;
 import game.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

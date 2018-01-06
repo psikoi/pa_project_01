@@ -18,7 +18,11 @@ import game.models.User;
 public class DataHandler {
     
     public static void insertPlayer(Player player){
+        if(player instanceof User)
+            UserDAOJSON.getInstance().insert( (User) player);
         
+        if(player instanceof Machine)
+            MachineDAOJSON.getInstance().insert( (Machine) player);
     }
 
     public static void saveGame(Game game) {

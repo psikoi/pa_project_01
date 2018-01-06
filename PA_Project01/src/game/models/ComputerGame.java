@@ -1,5 +1,8 @@
 package game.models;
 
+import game.factories.ComputerMoveStrategyFactory;
+import game.strategies.ComputerMoveStrategy;
+import game.strategies.moves.EasyComputerMove;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,44 +14,28 @@ import tads.graph.model.Joint;
 public class ComputerGame extends Game {
 
     private boolean thinking;
+    
+    private ComputerMoveStrategy moveStrategy;
 
-    public ComputerGame(Player player1, Machine machine, int level, int maxWidth) {
+    public ComputerGame(Player player1, Machine machine, 
+            int level, int maxWidth, GameDifficulty difficulty) {
         super(player1, machine, level, maxWidth);
+        this.moveStrategy  = new ComputerMoveStrategyFactory().make(difficulty);
     }
 
-    @Override
-    public boolean play(Edge<Connection, Joint> selected) {
-        super.play(selected);
 
-        if (getActivePlayer() instanceof Machine) {
-            thinking = true;
-            Timer delay = new Timer();
-
-            delay.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            delayedPlay(delay);
-                        }
-                    });
-                }
-
-            }, 500 + new Random().nextInt(1000));
-        }
-
-        return true;
-
+    public Edge<Connection, Joint> getNextMove() {
+        return moveStrategy.calculateMove(this);
     }
 
-    private void delayedPlay(Timer delay) {
-        play(((Machine) getActivePlayer()).getRandomMove(this));
-        thinking = false;
-        delay.cancel();
-    }
-
-    public boolean getThinking() {
+    public boolean isThinking() {
         return thinking;
     }
+
+    public void setThinking(boolean thinking) {
+        this.thinking = thinking;
+    }
+    
+    
 
 }

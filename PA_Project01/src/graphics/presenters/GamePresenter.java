@@ -1,8 +1,14 @@
 package graphics.presenters;
 
+import game.models.ComputerGame;
 import game.models.Game;
+import game.models.Machine;
 import graphics.Presenter;
 import graphics.views.GameView;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
 import tads.graph.Edge;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;
@@ -30,9 +36,37 @@ public class GamePresenter implements Presenter {
 
             if (model.isFinished()) {
                 view.displaySolution(model.getTriangleEdges());
+            } else {
+
+                if (model.getActivePlayer() instanceof Machine
+                        && model instanceof ComputerGame) {
+                    automatedPlay();
+                }
+
             }
         }
 
+    }
+
+    private void automatedPlay() {
+        ComputerGame cgame = (ComputerGame) model;
+        cgame.setThinking(true);
+
+        Timer delay = new Timer();
+
+        delay.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        executePlay(cgame.getNextMove());
+                        cgame.setThinking(false);
+                        delay.cancel();
+                    }
+                });
+            }
+
+        }, 500 + new Random().nextInt(1000));
     }
 
     public void undoPlay() {

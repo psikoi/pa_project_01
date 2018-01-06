@@ -1,7 +1,10 @@
 package game;
 
 import data.DataHandler;
+import game.models.ComputerGame;
 import game.models.Game;
+import game.models.GameDifficulty;
+import game.models.Machine;
 import game.models.User;
 import graphics.presenters.GamePresenter;
 import graphics.views.GameView;
@@ -57,7 +60,7 @@ public class Main extends Application {
         DataHandler.insertPlayer(user2);
 
 
-        return new Game(user, user2, 1, 600);
+        return new ComputerGame(user, new Machine(), 1, 600, GameDifficulty.EASY);
     }
 
 }

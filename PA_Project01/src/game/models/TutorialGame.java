@@ -20,7 +20,7 @@ public class TutorialGame extends ComputerGame{
      * @param player1 player who will take part in the game.
      */
     public TutorialGame(Player player1, Machine machine, int maxWidth){
-        super(player1, machine, 1, maxWidth);
+        super(player1, machine, 1, maxWidth, GameDifficulty.EASY);
     }
 
     /**

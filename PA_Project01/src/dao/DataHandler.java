@@ -5,7 +5,10 @@
  */
 package dao;
 
+import game.models.ComputerGame;
 import game.models.Game;
+import game.models.Machine;
+import game.models.Player;
 import game.models.User;
 
 /**
@@ -14,16 +17,34 @@ import game.models.User;
  */
 public class DataHandler {
     
-    public static void saveGame(Game game){
-        if(game.getInactivePlayer() instanceof User){
-            System.out.println("ganhei");
-           UserDAOJSON.getInstance().addGamePlayed(game.getInactivePlayer().getUsername());
-           UserDAOJSON.getInstance().addVictory(game.getInactivePlayer().getUsername());
-        }
+    public static void insertPlayer(Player player){
+        if(player instanceof User)
+            UserDAOJSON.getInstance().insert( (User) player);
         
-        if(game.getActivePlayer() instanceof User){
-            System.out.println("perdi");
-        }
+        if(player instanceof Machine)
+            MachineDAOJSON.getInstance().insert( (Machine) player);
     }
-    
+
+    public static void saveGame(Game game) {
+
+        if (game instanceof ComputerGame) {
+            
+            MachineDAOJSON.getInstance().addGamePlayed();
+
+            if (game.getInactivePlayer() instanceof User) {
+                //user ganhou
+                UserDAOJSON.getInstance().addGamePlayed(game.getInactivePlayer().getUsername());
+                UserDAOJSON.getInstance().addVictory(game.getInactivePlayer().getUsername());
+            }
+
+            if (game.getActivePlayer() instanceof User) {
+                //user perdeu
+                UserDAOJSON.getInstance().addGamePlayed(game.getActivePlayer().getUsername());
+                
+                MachineDAOJSON.getInstance().addVictory();
+            }
+        }
+
+    }
+
 }

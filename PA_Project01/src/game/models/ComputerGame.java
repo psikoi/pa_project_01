@@ -13,8 +13,8 @@ public class ComputerGame extends Game{
     
     private boolean thinking;
     
-    public ComputerGame(Player player1, int level){
-        super(player1, new Machine(), level);
+    public ComputerGame(Player player1, Machine machine, int level){
+        super(player1, machine, level);
     }
 
     @Override

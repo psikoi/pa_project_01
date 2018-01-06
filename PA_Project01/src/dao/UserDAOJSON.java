@@ -38,6 +38,7 @@ public final class UserDAOJSON implements UserDAO{
         this.data = loadAll();
     }
     
+    
     public static UserDAOJSON getInstance(){
         if(instance == null)
              instance = new UserDAOJSON();
@@ -47,7 +48,7 @@ public final class UserDAOJSON implements UserDAO{
     @Override
     public List<User> selectAll() {
        List<User> list = new LinkedList<>();
-        list.addAll(data.values());
+       list.addAll(data.values());
 
         return list;
     }
@@ -106,6 +107,7 @@ public final class UserDAOJSON implements UserDAO{
         return true;
     }
     
+    
     public boolean addGamePlayed(String username){
         User user = data.get(username);
         if(user == null)
@@ -120,6 +122,7 @@ public final class UserDAOJSON implements UserDAO{
         return true;
     }
     
+   
     public boolean addVictory(String username){
         User user = data.get(username);
         if(user == null){

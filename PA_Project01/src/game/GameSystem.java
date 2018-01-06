@@ -1,5 +1,7 @@
 package game;
 
+import dao.DataHandler;
+import dao.MachineDAOJSON;
 import dao.UserDAOJSON;
 import game.models.ComputerGame;
 import game.models.Game;
@@ -20,13 +22,20 @@ public class GameSystem {
     public static void init() {
 
         dimensions = new Dimension(600, 600);
+        
 
         User user = new User("Ruben", "123", "ruben.amendoeira@gmail.com");
         User user2 = new User("Tiago", "123", "tiago.afsantos@hotmail.com");
-        UserDAOJSON.getInstance().insert(user);
-        UserDAOJSON.getInstance().insert(user2);
-        game = new ComputerGame(user, 1);
+        
+        DataHandler.insertPlayer(user);
+        DataHandler.insertPlayer(user2);
+        
+        Machine machine = new Machine();
+        DataHandler.insertPlayer(machine);
+        
+        game = new ComputerGame(user, machine, 1);
         game.start();
+        
         
         gameController = new GameController(game);
         

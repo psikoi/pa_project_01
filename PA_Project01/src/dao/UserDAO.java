@@ -18,7 +18,7 @@ public interface UserDAO {
 
     User select(String username);
 
-    boolean insert(User entry);
+    boolean insert(User user);
 
     boolean remove(String username);
 

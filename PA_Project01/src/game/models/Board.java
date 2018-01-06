@@ -16,7 +16,6 @@ public class Board extends MyGraph<Joint, Connection> {
     public Board(int width) {
         this.width = width;
         this.controller = new BoardController(this);
-        //teste
     }
 
     public void generate(int size) {

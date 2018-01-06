@@ -13,7 +13,6 @@ public class Player {
     /**
      * Statistics about this player.
      */
-    //teste
     private int gamesPlayed, totalVictories, bestScore;
 
     /**
@@ -23,6 +22,7 @@ public class Player {
      */
     public int getGamesPlayed() {
         return gamesPlayed;
+        //teste
     }
 
     /**

@@ -1,6 +1,7 @@
 package game.models;
 
 import game.GameSystem;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import tads.graph.Edge;

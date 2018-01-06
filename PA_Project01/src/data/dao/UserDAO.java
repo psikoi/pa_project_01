@@ -25,5 +25,9 @@ public interface UserDAO {
     boolean updatePassword(String username, String newPassword);
     
     boolean updateEmail(String username, String newEmail);
+    
+    boolean addGamePlayed(String username);
+    
+    boolean addVictory(String username);
 
 }

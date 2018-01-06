@@ -1,5 +1,7 @@
 package game.models;
 
+import java.io.Serializable;
+
 /**
  * Represents the player who will take part in any form of game.
  * Contains general information about the player. It's the parent class to 
@@ -8,7 +10,7 @@ package game.models;
  * @author Tiago
  * @author Ruben
  */
-public class Player {
+public class Player implements Serializable{
     
     /**
      * Statistics about this player.
@@ -22,7 +24,6 @@ public class Player {
      */
     public int getGamesPlayed() {
         return gamesPlayed;
-        //teste
     }
 
     /**
@@ -78,10 +79,6 @@ public class Player {
         this.bestScore = bestScore;
     }
 
-    public String getUsername() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     
     
 }

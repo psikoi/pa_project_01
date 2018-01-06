@@ -1,8 +1,8 @@
 package game;
 
 import data.DataHandler;
-import data.dao.json.MachineDAOJSON;
-import data.dao.json.UserDAOJSON;
+import data.dao.json.*;
+import data.dao.serialization.*;
 import game.models.ComputerGame;
 import game.models.Game;
 import game.models.Machine;
@@ -23,6 +23,7 @@ public class GameSystem {
 
         dimensions = new Dimension(600, 600);
         
+        DataHandler.setDao(new UserDAOJSON(), new MachineDAOJSON());
 
         User user = new User("Ruben", "123", "ruben.amendoeira@gmail.com");
         User user2 = new User("Tiago", "123", "tiago.afsantos@hotmail.com");
@@ -31,6 +32,7 @@ public class GameSystem {
         DataHandler.insertPlayer(user2);
         
         Machine machine = new Machine();
+        
         DataHandler.insertPlayer(machine);
         
         game = new ComputerGame(user, machine, 1);

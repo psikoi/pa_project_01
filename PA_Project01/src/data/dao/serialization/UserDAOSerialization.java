@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package data.dao.json;
+package data.dao.serialization;
 
 import data.dao.UserDAO;
 import game.models.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,21 +24,21 @@ import java.util.logging.Logger;
  *
  * @author Tiago
  */
-public class UserDAOJSON implements UserDAO{
+public class UserDAOSerialization implements UserDAO {
     
-    private final static String USER_FILE = "user.json";
+    private final static String USER_FILE = "user.dat";
 
     private Map<String, User> data;
 
-    public UserDAOJSON() {
+    public UserDAOSerialization() {
         this.data = loadAll();
     }
 
     @Override
     public List<User> selectAll() {
-       List<User> list = new LinkedList<>();
-       list.addAll(data.values());
-
+        List<User> list = new LinkedList<>();
+        list.addAll(data.values());
+        
         return list;
     }
 
@@ -50,23 +47,25 @@ public class UserDAOJSON implements UserDAO{
         return data.get(username);
     }
 
+    
     @Override
     public boolean insert(User user) {
-        if(data.containsKey(user.getUsername()))
+        if (data.containsKey(user.getUsername())) {
             return false;
-        
+        }
+
         data.put(user.getUsername(), user);
         saveAll();
         return true;
-        
     }
-
+    
     @Override
     public boolean remove(String username) {
         boolean res =  data.remove(username) != null;
         saveAll();
         return res;
     }
+    
 
     @Override
     public boolean updatePassword(String username, String newPassword) {
@@ -128,23 +127,25 @@ public class UserDAOJSON implements UserDAO{
         
         return true;
     }
-    
-     private Map<String, User> loadAll() {
-        File file = new File(USER_FILE);
 
-        if (!file.exists()) {
+    private Map<String, User> loadAll() {
+        File f = new File(USER_FILE);
+
+        if (!f.exists()) {
             return new HashMap<>();
         } else {
             try {
                 Map<String, User> readMap;
-                
-                BufferedReader br = new BufferedReader(new FileReader(USER_FILE));
-                Gson gson = new GsonBuilder().create();
+                FileInputStream fileIn = new FileInputStream(USER_FILE);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
 
-                readMap = gson.fromJson(br, new TypeToken<Map<String, User>>(){}.getType());
-                
+                readMap = (Map<String, User>) in.readObject();
+
+                in.close();
+                fileIn.close();
+
                 return readMap;
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 System.out.println(e.getMessage());
                 Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE, e.getMessage());
             }
@@ -152,20 +153,18 @@ public class UserDAOJSON implements UserDAO{
 
         return new HashMap<>();
     }
-     
-      private void saveAll() {
+
+    private void saveAll() {
         try {
-            Writer writer = new FileWriter(USER_FILE);
-            
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(this.data, writer);
-            
-            writer.close();
-            
+            FileOutputStream fileOut = new FileOutputStream(USER_FILE);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this.data);
+            out.close();
+            fileOut.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
             Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE, e.getMessage());
         }
     }
-    
+
 }

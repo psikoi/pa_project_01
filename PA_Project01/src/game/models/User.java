@@ -1,6 +1,7 @@
 package game.models;
 
 import data.dao.json.UserDAOJSON;
+import java.io.Serializable;
 
 /** This class represents an User. It extends from Player, allowing it to take
  * part in games and make a distinction between human players and the 

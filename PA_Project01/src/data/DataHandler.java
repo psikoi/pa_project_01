@@ -1,5 +1,7 @@
 package data;
 
+import data.dao.MachineDAO;
+import data.dao.UserDAO;
 import data.dao.json.UserDAOJSON;
 import data.dao.json.MachineDAOJSON;
 import game.models.ComputerGame;
@@ -13,14 +15,22 @@ import game.models.User;
  * @author Tiago
  */
 public class DataHandler {
+    
+    private static UserDAO userDao;
+    private static MachineDAO machineDao;
+    
+    public static void setDao(UserDAO user, MachineDAO machine){
+        userDao = user;
+        machineDao = machine;
+    }
 
     public static void insertPlayer(Player player) {
         if (player instanceof User) {
-            UserDAOJSON.getInstance().insert((User) player);
+            userDao.insert((User) player);
         }
 
         if (player instanceof Machine) {
-            MachineDAOJSON.getInstance().insert((Machine) player);
+            machineDao.insert((Machine) player);
         }
     }
 
@@ -28,19 +38,21 @@ public class DataHandler {
 
         if (game instanceof ComputerGame) {
 
-            MachineDAOJSON.getInstance().addGamePlayed();
+            machineDao.addGamePlayed();
 
             if (game.getInactivePlayer() instanceof User) {
                 //user ganhou
-                UserDAOJSON.getInstance().addGamePlayed(game.getInactivePlayer().getUsername());
-                UserDAOJSON.getInstance().addVictory(game.getInactivePlayer().getUsername());
+                Player user = game.getInactivePlayer();
+                userDao.addGamePlayed( ((User)user).getUsername());
+                userDao.addVictory(((User)user).getUsername());
             }
 
             if (game.getActivePlayer() instanceof User) {
                 //user perdeu
-                UserDAOJSON.getInstance().addGamePlayed(game.getActivePlayer().getUsername());
+                Player user = game.getActivePlayer();
+                userDao.addGamePlayed(((User)user).getUsername());
 
-                MachineDAOJSON.getInstance().addVictory();
+                machineDao.addVictory();
             }
         }
 

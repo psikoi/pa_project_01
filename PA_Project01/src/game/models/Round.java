@@ -1,6 +1,5 @@
 package game.models;
 
-import game.GameSystem;
 import tads.graph.model.Connection;
 
 /**
@@ -134,7 +133,7 @@ public class Round {
      */
     @Override
     public String toString() {
-        return "Player: " + GameSystem.game.getPlayerIndex(player) + " " + (selectedEdge == null ? "N/A" : "-");
+        return "Player: " + player.getPlayerIndex() + " " + (selectedEdge == null ? "N/A" : "-");
     }
 
 }

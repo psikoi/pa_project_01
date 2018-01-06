@@ -5,11 +5,7 @@
  */
 package game.models;
 
-import game.GameSystem;
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,8 +38,7 @@ public class GameTest {
     
     @Before
     public void setUp() {
-        GameSystem.dimensions = new Dimension(600, 600); // Necessário para o contrutor de Game
-        game = new Game(new Player(), new Player(), 5);
+        game = new Game(new Player(), new Player(), 5, 600);
     }
     
     @After
@@ -55,7 +50,7 @@ public class GameTest {
     @Test
     public void getPlayer1_Player1_GettingPlayer1(){
         Player player1 = new Player();
-        Game gameAux = new Game(player1, new Player(), 5);
+        Game gameAux = new Game(player1, new Player(), 5, 600);
       
         assertEquals("Os jogadores devem ser iguais", player1, gameAux.getPlayer1());
     }
@@ -63,7 +58,7 @@ public class GameTest {
     @Test
     public void getPlayer2_Player2_GettingPlayer2(){
         Player player2 = new Player();
-        Game gameAux = new Game(new Player(), player2, 5);
+        Game gameAux = new Game(new Player(), player2, 5, 600);
         
         assertEquals("Os jogadores devem ser iguais", player2, gameAux.getPlayer2());
     }

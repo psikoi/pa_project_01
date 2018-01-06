@@ -1,6 +1,5 @@
 package game.models;
 
-import game.GameSystem;
 import java.util.ArrayList;
 import java.util.Random;
 import tads.graph.Edge;
@@ -22,9 +21,9 @@ public class Machine extends Player {
      * 
      * @return randomly selected edge. 
      */
-    public Edge<Connection, Joint> getRandomMove(){
+    public Edge<Connection, Joint> getRandomMove(Game game){
         
-        Board board = GameSystem.game.getBoard();
+        Board board = game.getBoard();
         ArrayList<Edge<Connection, Joint>> possibleMoves = new ArrayList<>();
         
         for(Edge<Connection, Joint> edge : board.edges()){

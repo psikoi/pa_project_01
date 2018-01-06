@@ -1,20 +1,8 @@
 package game.models;
 
 import data.DataHandler;
-import data.dao.json.UserDAOJSON;
-import game.GameSystem;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
 import tads.graph.Edge;
-import tads.graph.Vertex;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;
 
@@ -29,14 +17,23 @@ public class Game {
     private ArrayList<Round> rounds;
 
     private int activePlayerIndex;
+    
+    private int maxWidth;
 
-    public Game(Player player1, Player player2, int level) {
+    private ArrayList<Edge<Connection, Joint>> triangleEdges;
 
-        this.board = new Board((int) GameSystem.dimensions.getWidth());
+    public Game(Player player1, Player player2, int level, int maxWidth) {
+
+        this.board = new Board(maxWidth);
         this.level = level;
+        
+        this.maxWidth = maxWidth;
 
         this.player1 = player1;
         this.player2 = player2;
+
+        this.player1.setPlayerIndex(0);
+        this.player1.setPlayerIndex(1);
 
         this.rounds = new ArrayList<>();
 
@@ -113,10 +110,6 @@ public class Game {
         return activePlayerIndex == 1 ? player1 : player2;
     }
 
-    public int getPlayerIndex(Player player) {
-        return player1.equals(player) ? 0 : 1;
-    }
-
     public boolean canUndo(Player player) {
 
         if (rounds.size() < 2 || player.equals(getActivePlayer())) {
@@ -151,74 +144,55 @@ public class Game {
         }
     }
 
-    public void undoMove(Player player) {
+    public Connection undoMove() {
+        return undoMove(getInactivePlayer());
+    }
+
+    public Connection undoMove(Player player) {
 
         if (isFinished() || rounds.size() < 2 || !canUndo(player)) {
-            return;
+            return null;
         }
 
         Round secToLast = rounds.get(rounds.size() - 2);
+        Connection unselected = secToLast.getSelectedEdge();
 
         secToLast.select(null, false);
-        GameSystem.refresh();
-
+        return unselected;
     }
 
-    public void play(Edge<Connection, Joint> selected) {
+    public boolean play(Edge<Connection, Joint> selected) {
 
         if (isFinished()) {
-            return;
+            return false;
         }
 
-        ArrayList<Edge<Connection, Joint>> triangleEdges
-                = board.checkMove(getActivePlayer(), selected);
+        triangleEdges = board.checkMove(getActivePlayer(), selected);
 
         if (triangleEdges.isEmpty()) {
             getCurrentRound().select(selected.element(), false);
             skipRound();
         } else {
-//            addGameToPlayers();
-//            addVictoryToPlayer();
             getCurrentRound().select(selected.element(), true);
-            displaySolution(triangleEdges);
             end();
-            
+
         }
 
-        GameSystem.refresh();
-    }
-
-    private void displaySolution(ArrayList<Edge<Connection, Joint>> edges) {
-
-        HashSet<Joint> joints = new HashSet<>();
-
-        for (Edge<Connection, Joint> edge : edges) {
-            for (Vertex<Joint> joint : edge.vertices()) {
-                joints.add(joint.element());
-            }
-        }
-
-        GameSystem.gameController.showSolution(joints);
-        GameSystem.refresh();
-
+        return true;
     }
 
     public void end() {
-        //Cria classe DataHandler
-        //com metodo save(Game)
-        //que guarda as stats dos players
         DataHandler.saveGame(this);
     }
 
-//    private void addGameToPlayers(){
-//        System.out.println("q");
-//        UserDAOJSON.getInstance().addGamePlayed(((User)player1).getUsername());
-//        System.out.println("h");
-//        player2.addGamePlayed();
-//       // UserDAOJSON.getInstance().addGamePlayed(((User)player2).getUsername());
-//    }
-//    
-//    private void addVictoryToPlayer(){
-//        UserDAOJSON.getInstance().addVictory(((User)player1).getUsername());
-//    }
+    public ArrayList<Edge<Connection, Joint>> getTriangleEdges() {
+        return triangleEdges;
+    }
+
+    public int getMaxWidth() {
+        return maxWidth;
+    }
+
+    
+    
 }

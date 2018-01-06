@@ -1,6 +1,5 @@
 package game.models;
 
-import graphics.controllers.BoardController;
 import java.util.ArrayList;
 import tads.graph.Edge;
 import tads.graph.MyGraph;
@@ -11,12 +10,9 @@ import tads.graph.model.Joint;
 public class Board extends MyGraph<Joint, Connection> {
 
     private int width;
-    private BoardController controller;
 
     public Board(int width) {
         this.width = width;
-        this.controller = new BoardController(this);
-        //comentario123
     }
 
     public void generate(int size) {
@@ -40,6 +36,8 @@ public class Board extends MyGraph<Joint, Connection> {
 
             }
         }
+        
+
     }
 
     public ArrayList<Edge<Connection, Joint>> checkMove(Player player, Edge<Connection, Joint> selected) {

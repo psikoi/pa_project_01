@@ -14,6 +14,8 @@ public class Player {
      * Statistics about this player.
      */
     private int gamesPlayed, totalVictories, bestScore;
+    
+    private int playerIndex;
 
     /**
      * Returns the number of games this player has played.
@@ -81,6 +83,17 @@ public class Player {
     public String getUsername() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
+
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
+    
+    
+    
     
     
     

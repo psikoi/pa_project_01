@@ -19,8 +19,8 @@ public class TutorialGame extends ComputerGame{
      * 
      * @param player1 player who will take part in the game.
      */
-    public TutorialGame(Player player1, Machine machine){
-        super(player1, machine, 1);
+    public TutorialGame(Player player1, Machine machine, int maxWidth){
+        super(player1, machine, 1, maxWidth);
     }
 
     /**
@@ -30,8 +30,8 @@ public class TutorialGame extends ComputerGame{
      * @param selected selected Edge.
      */
     @Override
-    public void play(Edge<Connection, Joint> selected) {
-        super.play(selected); 
+    public boolean play(Edge<Connection, Joint> selected) {
+        return super.play(selected); 
         
         //dependo do getRounds().size (nº de ronda)
         //fazer certas açoes

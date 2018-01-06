@@ -22,10 +22,7 @@ public class Connection {
     public Player getSelector() {
         return selector;
     }
-    
-    
-    
-    
+
     
 
 }

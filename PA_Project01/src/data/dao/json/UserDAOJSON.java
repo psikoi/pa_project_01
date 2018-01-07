@@ -27,23 +27,14 @@ import java.util.logging.Logger;
  *
  * @author Tiago
  */
-public final class UserDAOJSON implements UserDAO{
-    
-    private static UserDAOJSON instance;
+public class UserDAOJSON implements UserDAO{
     
     private final static String USER_FILE = "user.json";
 
     private Map<String, User> data;
 
-    private UserDAOJSON() {
+    public UserDAOJSON() {
         this.data = loadAll();
-    }
-    
-    
-    public static UserDAOJSON getInstance(){
-        if(instance == null)
-             instance = new UserDAOJSON();
-        return instance;
     }
 
     @Override
@@ -75,7 +66,6 @@ public final class UserDAOJSON implements UserDAO{
         boolean res =  data.remove(username) != null;
         saveAll();
         return res;
-        
     }
 
     @Override
@@ -108,7 +98,7 @@ public final class UserDAOJSON implements UserDAO{
         return true;
     }
     
-    
+    @Override
     public boolean addGamePlayed(String username){
         User user = data.get(username);
         if(user == null)
@@ -123,7 +113,7 @@ public final class UserDAOJSON implements UserDAO{
         return true;
     }
     
-   
+    @Override
     public boolean addVictory(String username){
         User user = data.get(username);
         if(user == null){
@@ -131,6 +121,38 @@ public final class UserDAOJSON implements UserDAO{
         }
         
         user.addVictory();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addLoss(String username){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addLoss();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addTimePlayed(String username, long time){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addTimePlayed(time);
         
         data.replace(username, user);
         
@@ -152,7 +174,7 @@ public final class UserDAOJSON implements UserDAO{
                 Gson gson = new GsonBuilder().create();
 
                 readMap = gson.fromJson(br, new TypeToken<Map<String, User>>(){}.getType());
-
+                
                 return readMap;
             } catch (IOException e) {
                 System.out.println(e.getMessage());

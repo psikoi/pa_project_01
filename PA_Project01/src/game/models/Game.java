@@ -102,6 +102,7 @@ public class Game {
 
     }
 
+    
     public Player getActivePlayer() {
         return activePlayerIndex == 0 ? player1 : player2;
     }

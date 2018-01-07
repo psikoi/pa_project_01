@@ -5,10 +5,6 @@ import game.models.Game;
 import game.models.Machine;
 import graphics.Presenter;
 import graphics.views.GameView;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.application.Platform;
 import tads.graph.Edge;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;
@@ -25,14 +21,14 @@ public class GamePresenter implements Presenter {
     }
 
     public void executePlay(Edge<Connection, Joint> edge) {
-
-        if (edge.element().isSelected()) {
+        
+        if(edge.element().isSelected())
             return;
-        }
 
         if (model.play(edge)) {
             view.selectEdge(edge);
             view.changeUndo(model.canUndo(edge.element().getSelector()));
+            
 
             if (model.isFinished()) {
                 view.displaySolution(model.getTriangleEdges());
@@ -52,6 +48,10 @@ public class GamePresenter implements Presenter {
         ComputerGame cgame = (ComputerGame) model;
         cgame.setThinking(true);
 
+        executePlay(cgame.getNextMove());
+        cgame.setThinking(false);
+        /*
+
         Timer delay = new Timer();
 
         delay.schedule(new TimerTask() {
@@ -66,7 +66,7 @@ public class GamePresenter implements Presenter {
                 });
             }
 
-        }, 500 + new Random().nextInt(1000));
+        }, 500 + new Random().nextInt(1000));*/
     }
 
     public void undoPlay() {

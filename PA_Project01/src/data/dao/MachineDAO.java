@@ -20,4 +20,8 @@ public interface MachineDAO {
     boolean addGamePlayed();
     
     boolean addVictory();
+    
+    boolean addLoss();
+    
+    boolean addTimePlayed(long time);
 }

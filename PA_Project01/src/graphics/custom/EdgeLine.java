@@ -15,9 +15,9 @@ public class EdgeLine extends Line {
     private final Color FIRST_SELECT_COLOR = Color.rgb(65, 135, 210);
     private final Color SECOND_SELECT_COLOR = Color.rgb(210, 40, 40);
 
-    private final int DEFAULT_LINE_WIDTH = 3;
+    private final int DEFAULT_LINE_WIDTH = 8;
     private final int SELECTED_LINE_WIDTH = 5;
-    private final int HOVER_LINE_WIDTH = 5;
+    private final int HOVER_LINE_WIDTH = 10;
 
     private Edge<Connection, Joint> connection;
 

@@ -113,7 +113,6 @@ public class MyGraph<V, E> implements Graph<V, E> {
         return checkVertex(v).listaEdges;
     }
 
-    
     @Override
     public Vertex<V> opposite(Vertex<V> v, Edge<E, V> e) throws InvalidVertexException, InvalidEdgeException {
         Vertex<V>[] vertices = checkEdge(e).vertices();
@@ -158,7 +157,6 @@ public class MyGraph<V, E> implements Graph<V, E> {
             throw new InvalidVertexException(v.element() + "not exists ");
         }
 
-     
         MyEdge edge = new MyEdge(elem, u, v);
         // coloca-lo nos vertices.
         checkVertex(u).listaEdges.add(edge);
@@ -208,8 +206,6 @@ public class MyGraph<V, E> implements Graph<V, E> {
 
     }
 
-    
-    
     private class MyVertex implements Vertex<V> {
 
         private V elem;
@@ -252,10 +248,10 @@ public class MyGraph<V, E> implements Graph<V, E> {
 
         @Override
         public Vertex<V>[] vertices() {
-            Vertex[] vertices= new Vertex[2];
-            vertices[0]=vertexIn;
-            vertices[1]=vertexOut;
-            return vertices;      
+            Vertex[] vertices = new Vertex[2];
+            vertices[0] = vertexIn;
+            vertices[1] = vertexOut;
+            return vertices;
         }
 
     }

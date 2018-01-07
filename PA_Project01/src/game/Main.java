@@ -1,6 +1,8 @@
 package game;
 
 import data.DataHandler;
+import data.dao.json.UserDAOJSON;
+import data.dao.serialization.MachineDAOSerialization;
 import game.models.ComputerGame;
 import game.models.Game;
 import game.models.GameDifficulty;
@@ -8,16 +10,19 @@ import game.models.Machine;
 import game.models.User;
 import graphics.presenters.GamePresenter;
 import graphics.views.GameView;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import javafx.stage.Stage;
+import session.Authentication;
+import session.SessionManager;
 
 public class Main extends Application {
 
     public static Stage stage;
-    
+
     public static GamePresenter gamePresenter;
 
     @Override
@@ -26,8 +31,7 @@ public class Main extends Application {
         stage = primaryStage;
 
         Pane contentPane = new Pane();
-        
-        
+
         contentPane.getChildren().add(gamePresenter.getView());
 
         Scene scene = new Scene(contentPane, 600, 600);
@@ -38,29 +42,35 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        //GameSystem.init();
 
         Game game = createGame();
 
         game.start();
 
         gamePresenter = new GamePresenter(game, new GameView(game));
-        
-        
+
         launch(args);
 
     }
 
     private static Game createGame() {
 
-        User user = new User("Ruben", "123", "ruben.amendoeira@gmail.com");
-        User user2 = new User("Tiago", "123", "tiago.afsantos@hotmail.com");
+        DataHandler.setDao(new UserDAOJSON(), new MachineDAOSerialization());
 
-        DataHandler.insertPlayer(user);
-        DataHandler.insertPlayer(user2);
+        Authentication.register("Ruben", "123", "ruben.amendoeira@gmail.com");
+        Authentication.register("Tiago", "123321", "tiago.afsantos@hotmail.com");
+        Authentication.register("Rui", "tshirt", "rui.miguel@hotmail.com");
+        Authentication.register("Tiago", "33333", "123.tiago@hotmail.com");
 
+        Authentication.login("Ruben", "123");
+        Authentication.login("Tiago", "123321");
 
-        return new ComputerGame(user, new Machine(), 1, 600, GameDifficulty.EASY);
+        ArrayList<User> loggedIn = SessionManager.getLoggedInUsers();
+        
+        Machine machine = new Machine();
+        DataHandler.insertPlayer(machine);
+
+        return new ComputerGame(loggedIn.get(0), machine, 0, 600, GameDifficulty.HARD);
     }
 
 }

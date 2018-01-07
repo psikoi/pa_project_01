@@ -16,10 +16,14 @@ public class Joint {
     public int getY() {
         return y;
     }
-
+    
     @Override
     public String toString() {
         return "x: " + x + " y:" + y;
+    }
+
+    public Joint copy() {
+        return new Joint(x,y);
     }
 
 }

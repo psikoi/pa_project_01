@@ -24,14 +24,8 @@ public class EasyComputerMove implements ComputerMoveStrategy {
     public Edge<Connection, Joint> getRandomMove(Game game) {
 
         Board board = game.getBoard();
-        ArrayList<Edge<Connection, Joint>> possibleMoves = new ArrayList<>();
-
-        for (Edge<Connection, Joint> edge : board.edges()) {
-            if (!edge.element().isSelected()) {
-                possibleMoves.add(edge);
-            }
-        }
-
+        ArrayList<Edge<Connection, Joint>> possibleMoves = board.getPossibleMoves();
+        
         if (!possibleMoves.isEmpty()) {
             return possibleMoves.get(new Random().nextInt(possibleMoves.size()));
         }

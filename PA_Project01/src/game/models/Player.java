@@ -1,5 +1,9 @@
 package game.models;
 
+
+ import java.io.Serializable;
+
+
 /**
  * Represents the player who will take part in any form of game.
  * Contains general information about the player. It's the parent class to 
@@ -8,12 +12,13 @@ package game.models;
  * @author Tiago
  * @author Ruben
  */
-public class Player {
+public class Player implements Serializable{
     
     /**
      * Statistics about this player.
      */
-    private int gamesPlayed, totalVictories, bestScore;
+    private int gamesPlayed, totalVictories, totalLosses, bestScore;
+    private long timePlayed;
     
     private int playerIndex;
 
@@ -36,8 +41,33 @@ public class Player {
         this.gamesPlayed = gamesPlayed;
     }
     
+    
     public void addGamePlayed(){
         this.gamesPlayed++;
+    }
+    
+    public int getTotalLosses(){
+        return totalLosses;
+    }
+    
+    public void addLoss(){
+        totalLosses++;
+    }
+    
+    public void setLosses(int losses){
+        this.totalLosses = losses;
+    }
+    
+    public long getTimePlayed(){
+        return timePlayed;
+    }
+    
+    public void addTimePlayed(long time){
+        timePlayed += time;
+    }
+    
+    public void setTimePlayed(long time){
+        timePlayed = time;
     }
 
     /**
@@ -79,11 +109,7 @@ public class Player {
     public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
     }
-
-    public String getUsername() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     public int getPlayerIndex() {
         return playerIndex;
     }

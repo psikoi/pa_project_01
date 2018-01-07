@@ -86,8 +86,8 @@ public class GameView extends Pane implements View {
             }
         }
     }
-    
-    public void changeUndo(boolean enable){
+
+    public void changeUndo(boolean enable) {
         undoButton.setDisable(!enable);
     }
 

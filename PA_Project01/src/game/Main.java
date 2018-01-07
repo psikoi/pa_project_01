@@ -1,6 +1,7 @@
 package game;
 
 import com.sun.glass.events.WindowEvent;
+import encryption.MD5Encrypter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -15,7 +16,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         stage = primaryStage;
 
         GameSystem.contentPane = new Pane();

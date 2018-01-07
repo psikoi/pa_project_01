@@ -258,6 +258,7 @@ public class UserDAOSQLite implements UserDAO {
         }
     }
     
+    
     private Connection connect() {
         Connection conn = null;
         try {

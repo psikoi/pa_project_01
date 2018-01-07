@@ -27,7 +27,7 @@ public class GameSystem {
         DataHandler.setDao(new UserDAOSQLite(), new MachineDAOSQLite());
 
         User user = new User("Ruben", "123", "ruben.amendoeira@gmail.com");
-        User user2 = new User("Tiago", "123", "tiago.afsantos@hotmail.com");
+        User user2 = new User("Tiago", "123321", "tiago.afsantos@hotmail.com");
         
         DataHandler.insertPlayer(user);
         DataHandler.insertPlayer(user2);

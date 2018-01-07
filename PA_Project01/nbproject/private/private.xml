@@ -6,9 +6,11 @@
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/data/dao/sqlite/UserDAOSQLite.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/data/dao/UserDAO.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/game/models/Player.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/data/dao/json/UserDAOJSON.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/game/Main.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/data/dao/serialization/MachineDAOSerialization.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/game/GameSystem.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/encryption/MD5Encrypter.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/game/models/User.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/data/DataHandler.java</file>
             <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/data/dao/sqlite/MachineDAOSQLite.java</file>

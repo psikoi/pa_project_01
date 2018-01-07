@@ -26,9 +26,8 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
     @Override
     public Edge<Connection, Joint> calculateMove(Game game) {
-        
-        
-        if(game.getRounds().size() < 4){
+
+        if (game.getRounds().size() < 3) {
             ArrayList<Edge<Connection, Joint>> possibleMoves = game.getBoard().getPossibleMoves();
             return possibleMoves.get(new Random().nextInt(possibleMoves.size()));
         }
@@ -41,33 +40,39 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
         Position<Board> root = tree.root();
 
-        long start = System.currentTimeMillis();
-        
-        
         addSubtrees(tree, root, game);
-        System.out.println(System.currentTimeMillis() - start);
-        start  = System.currentTimeMillis();
+
+        long h = System.currentTimeMillis();
+
+        int treeHeight = tree.height();
+
+        ArrayList<BoardScorePair> toInsert = new ArrayList<>();
 
         for (Position<Board> board : tree.depthOrder()) {
             if (tree.isExternal(board)) {
-                int height = tree.height();
+
+                toInsert = new ArrayList<>();
+                
+                int height = treeHeight;
                 Position<Board> current = board;
 
                 while (!tree.isRoot(current)) {
-                    int score = /*evaluate(tree, current, height);*/ 50;
-                    results.put(current, score);
+                    evaluate(tree, current, height, toInsert);
                     height--;
                     current = tree.parent(current);
+                }
+                
+                
+                for(BoardScorePair pair : toInsert){
+                    results.put(pair.getBoard(), pair.getScore());
                 }
 
             }
         }
-
-        System.out.println(System.currentTimeMillis() - start);
-        start  = System.currentTimeMillis();
         
-        results = sortByScore(results);
+        
 
+        results = sortByScore(results);
 
         for (Map.Entry<Position<Board>, Integer> entry : results.entrySet()) {
 
@@ -80,9 +85,10 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
             for (Edge<Connection, Joint> edge : prev.element().edges()) {
                 if (edge.element().getSelector() instanceof Machine) {
-                    Edge<Connection, Joint>  chosen =  game.getBoard().findIdentical(edge);
-                    if(chosen.element().isSelected())
+                    Edge<Connection, Joint> chosen = game.getBoard().findIdentical(edge);
+                    if (chosen.element().isSelected()) {
                         continue;
+                    }
                     return chosen;
                 }
             }
@@ -93,31 +99,54 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
     }
 
-    public int evaluate(LinkedTree<Board> tree, Position<Board> parent, int height) {
-
+    public int evaluate(LinkedTree<Board> tree, Position<Board> parent, int height, ArrayList<BoardScorePair> list) {
         int score = 25 * height;
-        
-        if(parent.element().numSelectedEdges() < 5)
-            return score;
 
-        ArrayList<Edge<Connection, Joint>> edges = parent.element().checkAnyTriangle();
+        if (parent.element().numSelectedEdges() < 5) {
+            return score;
+        }
+
+        Edge<Connection, Joint> toCheck = difference(parent.element(), tree.parent(parent).element());
+        Player p = toCheck.element().getSelector();
+
+        ArrayList<Edge<Connection, Joint>> edges = parent.element().checkMove(p, toCheck);
+
 
         if (!edges.isEmpty()) {
 
             if (edges.get(0).element().getSelector() instanceof Machine) {
                 score = 100 * height;
+                list.clear();
             } else {
                 score = 1 * height;
             }
 
         }
 
+        
+        list.add(new BoardScorePair(parent, score));
+        
         return score;
 
     }
 
-    public void addSubtrees(LinkedTree<Board> tree, Position<Board> parent, Game game) {
+    private Edge<Connection, Joint> difference(Board a, Board b) {
 
+        for (Edge<Connection, Joint> edge : a.edges()) {
+            if (edge.element().isSelected()) {
+                Edge<Connection, Joint> identical = b.findIdentical(edge);
+                if (identical == null || !identical.element().isSelected()) {
+                    return edge;
+                }
+            }
+
+        }
+
+        return null;
+
+    }
+
+    public void addSubtrees(LinkedTree<Board> tree, Position<Board> parent, Game game) {
 
         for (Edge<Connection, Joint> possibleMove : parent.element().getPossibleMoves()) {
             Board b = parent.element().copy();
@@ -128,7 +157,10 @@ public class HardComputerMove implements ComputerMoveStrategy {
                 Player sim = getSimulatedPlayer(game);
                 found.element().select(sim);
             }
+        }
 
+        if (tree.height() > 8) {
+            return;
         }
 
         int temp = simPlayerIndex;
@@ -169,6 +201,28 @@ public class HardComputerMove implements ComputerMoveStrategy {
         }
 
         return sortedMap;
+
+    }
+
+    private class BoardScorePair {
+
+        private Position<Board> board;
+        private int score;
+
+        public BoardScorePair(Position<Board> board, int score) {
+            this.board = board;
+            this.score = score;
+        }
+
+        public Position<Board> getBoard() {
+            return board;
+        }
+
+        public int getScore() {
+            return score;
+        }
+        
+        
 
     }
 

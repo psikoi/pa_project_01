@@ -2,11 +2,6 @@ package game.models;
 
 import game.factories.ComputerMoveStrategyFactory;
 import game.strategies.ComputerMoveStrategy;
-import game.strategies.moves.EasyComputerMove;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.application.Platform;
 import tads.graph.Edge;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;

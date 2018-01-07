@@ -1,8 +1,9 @@
 package game;
 
 import data.DataHandler;
-import data.dao.json.UserDAOJSON;
-import data.dao.serialization.MachineDAOSerialization;
+import data.dao.json.*;
+import data.dao.serialization.*;
+import data.dao.sqlite.*;
 import game.models.ComputerGame;
 import game.models.Game;
 import game.models.GameDifficulty;
@@ -60,7 +61,6 @@ public class Main extends Application {
         Authentication.register("Ruben", "123", "ruben.amendoeira@gmail.com");
         Authentication.register("Tiago", "123321", "tiago.afsantos@hotmail.com");
         Authentication.register("Rui", "tshirt", "rui.miguel@hotmail.com");
-        Authentication.register("Tiago", "33333", "123.tiago@hotmail.com");
 
         Authentication.login("Ruben", "123");
         Authentication.login("Tiago", "123321");
@@ -70,7 +70,7 @@ public class Main extends Application {
         Machine machine = new Machine();
         DataHandler.insertPlayer(machine);
 
-        return new ComputerGame(loggedIn.get(0), machine, 0, 600, GameDifficulty.HARD);
+        return new ComputerGame(loggedIn.get(0), machine, 1, 600, GameDifficulty.HARD);
     }
 
 }

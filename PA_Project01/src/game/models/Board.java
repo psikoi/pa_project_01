@@ -75,43 +75,7 @@ public class Board extends MyGraph<Joint, Connection> {
         return edges;
     }
 
-    public ArrayList<Edge<Connection, Joint>> checkAnyTriangle() {
-
-        ArrayList<Edge<Connection, Joint>> edges = new ArrayList<>();
-
-        for (Edge<Connection, Joint> selected : edges()) {
-
-            for (Edge<Connection, Joint> incident : incidentEdges(selected.vertices()[0])) {
-
-                Player selector = incident.element().getSelector();
-
-                if (selector == null || !selector.equals(selected.element().getSelector())) {
-                    continue;
-                }
-
-                Vertex<Joint> opposite = opposite(selected.vertices()[0], incident);
-
-                for (Edge<Connection, Joint> oppositeIncident : incidentEdges(opposite)) {
-
-                    Player selector2 = oppositeIncident.element().getSelector();
-
-                    if (selector2 == null || !selector2.equals(selected.element().getSelector())) {
-                        continue;
-                    }
-
-                    if (opposite(opposite, oppositeIncident) == selected.vertices()[1]) {
-                        edges.add(selected);
-                        edges.add(incident);
-                        edges.add(oppositeIncident);
-                        return edges;
-                    }
-                }
-            }
-        }
-
-        return edges;
-    }
-
+  
     public Edge<Connection, Joint> find(Connection connection) {
         for (Edge<Connection, Joint> edge : this.edges()) {
             if (edge.element().equals(connection)) {

@@ -28,16 +28,16 @@ public class UserDAOSQLite implements UserDAO {
     private static final String URL = "jdbc:sqlite:" + DB_FILE;
 
     private static final String STATEMENT_SELECT_ALL = "SELECT * FROM Users";
-    private static final String STATEMENT_SELECT_ALL_USER_INFORMATION = "SELECT username, password, email, gamesPlayed, totalVictories, bestScore FROM Users WHERE username = ?";
-    private static final String STATEMENT_SELECT_ACCOUNT_INFORMATION = "SELECT username, password, email FROM Users WHERE usename = ?";
-    private static final String STATEMENT_SELECT_ACCOUNT_STATISTICS = "SELECT gamesPlayed, totalVictories, bestScore FROM Users WHERE username = ?";
-    private static final String STATEMENT_INSERT = "INSERT INTO Users(username, password, email, gamesPlayed, totalVictories, bestScore) VALUES(?,?,?,0,0,0)";
+    private static final String STATEMENT_SELECT_ALL_USER_INFORMATION = "SELECT username, password, email, gamesPlayed, totalVictories, totalLosses, bestScore, timePlayed FROM Users WHERE username = ?";
+    private static final String STATEMENT_INSERT = "INSERT INTO Users(username, password, email, gamesPlayed, totalVictories, totalLosses, bestScore, timePlayed) VALUES(?,?,?,0,0,0,0,0)";
     private static final String STATEMENT_DELETE = "DELETE FROM Users WHERE username = ?";
     private static final String STATEMENT_UPDATE_PASSWORD = "UPDATE Users SET password = ? WHERE username = ?";
     private static final String STATEMENT_UPDATE_EMAIL = "UPDATE Users SET email = ? WHERE username = ?";
     private static final String STATEMENT_UPDATE_GAMES_PLAYED_INCREMENT_1 = "UPDATE Users SET gamesPlayed = gamesPlayed + 1 WHERE username = ?";
     private static final String STATEMENT_UPDATE_TOTAL_VICTORIES_INCREMENT_1 = "UPDATE Users SET totalVictories = totalVictories + 1 WHERE username = ?";
-
+    private static final String STATEMENT_UPDATE_TOTAL_LOSSES_INCREMENT_1 = "UPDATE Users SET totalLosses = totalLosses + 1 WHERE username = ?";
+    private static final String STATEMENT_UPDATE_TIME_PLAYED_INCREMENT_X = "UPDATE Users SET timePlayed = timePlayed + ? WHERE username = ?";
+    
     public UserDAOSQLite() {
         strutureCreate();
     }
@@ -93,6 +93,8 @@ public class UserDAOSQLite implements UserDAO {
             user.setGamesPlayed(rs.getInt("gamesPlayed"));
             user.setTotalVictories(rs.getInt("totalVictories"));
             user.setBestScore(rs.getInt("bestScore"));
+            user.setLosses(rs.getInt("totalLosses"));
+            user.setTimePlayed(rs.getLong("timePlayed"));
 
             return user;
 
@@ -235,6 +237,47 @@ public class UserDAOSQLite implements UserDAO {
         }
         return false;
     }
+    
+    @Override
+    public boolean addLoss(String username) {
+        if (select(username) == null) {
+            return false;
+        }
+
+        try (Connection sqlConnection = connect(); PreparedStatement pstmt = sqlConnection.prepareStatement(STATEMENT_UPDATE_TOTAL_LOSSES_INCREMENT_1)){
+            
+            pstmt.setString(1, username);
+
+            pstmt.execute();
+
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOSQLite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean addTimePlayed(String username, long time) {
+        if (select(username) == null) {
+            return false;
+        }
+
+        try (Connection sqlConnection = connect(); PreparedStatement pstmt = sqlConnection.prepareStatement(STATEMENT_UPDATE_TIME_PLAYED_INCREMENT_X)){
+            
+            pstmt.setLong(1, time);
+            pstmt.setString(2, username);
+
+            pstmt.execute();
+
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOSQLite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     private void strutureCreate() {
 
@@ -244,8 +287,10 @@ public class UserDAOSQLite implements UserDAO {
                 + "	password text NOT NULL,\n"
                 + "	email text NOT NULL,\n"
                 + "     gamesPlayed int NOT NULL,\n"
-                + "     totalVictories int NOT NULL,\n"
-                + "     bestScore int NOT NULL\n"
+                + "     totalVictories int NOT NULL,"
+                + "     totalLosses int NOT NULL,\n"
+                + "     bestScore int NOT NULL,"
+                + "     timePlayed int NOT NULL\n"
                 + ");";
 
         try (Connection sqlConnection = connect(); Statement stmt = sqlConnection.createStatement()){

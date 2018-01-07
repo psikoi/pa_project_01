@@ -29,5 +29,9 @@ public interface UserDAO {
     boolean addGamePlayed(String username);
     
     boolean addVictory(String username);
+    
+    boolean addLoss(String username);
+    
+    boolean addTimePlayed(String username, long time);
 
 }

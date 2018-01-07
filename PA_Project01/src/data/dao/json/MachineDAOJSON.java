@@ -81,6 +81,38 @@ public class MachineDAOJSON implements MachineDAO{
         return true;
     }
     
+    @Override
+    public boolean addLoss(){
+        Machine machine = data.get("Machine");
+        if(machine == null){
+            return false;
+        }
+        
+        machine.addLoss();
+        
+        data.replace("Machine", machine);
+        
+        save();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addTimePlayed(long time){
+        Machine machine = data.get("Machine");
+        if(machine == null){
+            return false;
+        }
+        
+        machine.addTimePlayed(time);
+        
+        data.replace("Machine", machine);
+        
+        save();
+        
+        return true;
+    }
+    
     private Map<String, Machine> loadAll() {
         File file = new File(MACHINE_FILE);
 

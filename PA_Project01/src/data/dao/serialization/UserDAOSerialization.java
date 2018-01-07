@@ -127,6 +127,38 @@ public class UserDAOSerialization implements UserDAO {
         
         return true;
     }
+    
+    @Override
+    public boolean addLoss(String username){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addLoss();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addTimePlayed(String username, long time){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addTimePlayed(time);
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
 
     private Map<String, User> loadAll() {
         File f = new File(USER_FILE);

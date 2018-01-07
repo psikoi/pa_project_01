@@ -23,9 +23,6 @@ public class DataHandler {
     public static void setDao(UserDAO user, MachineDAO machine){
         userDao = user;
         machineDao = machine;
-        
-        System.out.println(userDao.select("Ruben").getPassword());
-        System.out.println(userDao.select("Tiago").getPassword());
     }
 
     public static void insertPlayer(Player player) {
@@ -39,26 +36,38 @@ public class DataHandler {
             machineDao.insert((Machine) player);
         }
     }
+    
+    public static User selectUser(String username){
+        return userDao.select(username);
+    }
 
     public static void saveGame(Game game) {
 
         if (game instanceof ComputerGame) {
 
             machineDao.addGamePlayed();
+            machineDao.addTimePlayed(game.getDuration());
 
             if (game.getInactivePlayer() instanceof User) {
                 //user ganhou
                 Player user = game.getInactivePlayer();
                 userDao.addGamePlayed( ((User)user).getUsername());
                 userDao.addVictory(((User)user).getUsername());
+                userDao.addTimePlayed(((User)user).getUsername(), game.getDuration());
+                
+                machineDao.addLoss();
+                
             }
 
             if (game.getActivePlayer() instanceof User) {
                 //user perdeu
                 Player user = game.getActivePlayer();
                 userDao.addGamePlayed(((User)user).getUsername());
+                userDao.addLoss(((User)user).getUsername());
+                userDao.addTimePlayed(((User)user).getUsername(), game.getDuration());
 
                 machineDao.addVictory();
+                
             }
         }
     }

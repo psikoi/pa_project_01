@@ -26,9 +26,11 @@ public class MachineDAOSQLite implements MachineDAO{
     private static final String URL = "jdbc:sqlite:" + DB_FILE;
 
     private static final String STATEMENT_SELECT_ALL = "SELECT * FROM Machine";
-    private static final String STATEMENT_INSERT = "INSERT INTO Machine(name, gamesPlayed, totalVictories, bestScore) VALUES(\"Machine\",0,0,0)";
+    private static final String STATEMENT_INSERT = "INSERT INTO Machine(name, gamesPlayed, totalVictories, totalLosses, bestScore, timePlayed) VALUES(\"Machine\",0,0,0,0,0)";
     private static final String STATEMENT_UPDATE_GAMES_PLAYED_INCREMENT_1 = "UPDATE Machine SET gamesPlayed = gamesPlayed + 1 WHERE name = \"Machine\"";
     private static final String STATEMENT_UPDATE_TOTAL_VICTORIES_INCREMENT_1 = "UPDATE Machine SET totalVictories = totalVictories + 1 WHERE name = \"Machine\"";
+    private static final String STATEMENT_UPDATE_TOTAL_LOSSES_INCREMENT_1 = "UPDATE Machine SET totalLosses = totalLosses + 1 WHERE name = \"Machine\"";
+    private static final String STATEMENT_UPDATE_TIME_PLAYED_INCREMENT_X = "UPDATE Machine SET timePlayed = timePlayed + ? WHERE name = \"Machine\"";
 
     public MachineDAOSQLite() {
         strutureCreate();
@@ -50,6 +52,8 @@ public class MachineDAOSQLite implements MachineDAO{
             machine.setGamesPlayed(rs.getInt("gamesPlayed"));
             machine.setTotalVictories(rs.getInt("totalVictories"));
             machine.setBestScore(rs.getInt("bestScore"));
+            machine.setLosses(rs.getInt("totalLosses"));
+            machine.setTimePlayed(rs.getLong("timePlayed"));
 
             return machine;
 
@@ -117,6 +121,44 @@ public class MachineDAOSQLite implements MachineDAO{
         }
         return false;
     }
+    
+    @Override
+    public boolean addLoss(){
+        if (select() == null) {
+            return false;
+        }
+
+        try (Connection sqlConnection = connect(); PreparedStatement pstmt = sqlConnection.prepareStatement(STATEMENT_UPDATE_TOTAL_LOSSES_INCREMENT_1)){
+           
+            pstmt.execute();
+
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MachineDAOSQLite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean addTimePlayed(long time){
+        if (select() == null) {
+            return false;
+        }
+
+        try (Connection sqlConnection = connect(); PreparedStatement pstmt = sqlConnection.prepareStatement(STATEMENT_UPDATE_TIME_PLAYED_INCREMENT_X)){
+           
+            pstmt.setLong(1, time);
+            
+            pstmt.execute();
+
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MachineDAOSQLite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     private void strutureCreate() {
 
@@ -124,8 +166,10 @@ public class MachineDAOSQLite implements MachineDAO{
         String sql = "CREATE TABLE IF NOT EXISTS Machine (\n"
                 + "	name varchar(50) PRIMARY KEY,\n"
                 + "     gamesPlayed int NOT NULL,\n"
-                + "     totalVictories int NOT NULL,\n"
-                + "     bestScore int NOT NULL\n"
+                + "     totalVictories int NOT NULL,"
+                + "     totalLosses int NOT NULL,\n"
+                + "     bestScore int NOT NULL,\n"
+                + "     timePlayed int NOT NULL\n"
                 + ");";
 
         try (Connection sqlConnection = connect(); Statement stmt = sqlConnection.createStatement()){

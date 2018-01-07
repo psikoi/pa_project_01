@@ -15,7 +15,9 @@ public class Player implements Serializable{
     /**
      * Statistics about this player.
      */
-    private int gamesPlayed, totalVictories, bestScore;
+    private int gamesPlayed, totalVictories, totalLosses, bestScore;
+    private long timePlayed;
+     
 
     /**
      * Returns the number of games this player has played.
@@ -37,6 +39,30 @@ public class Player implements Serializable{
     
     public void addGamePlayed(){
         this.gamesPlayed++;
+    }
+    
+    public int getTotalLosses(){
+        return totalLosses;
+    }
+    
+    public void addLoss(){
+        totalLosses++;
+    }
+    
+    public void setLosses(int losses){
+        this.totalLosses = losses;
+    }
+    
+    public long getTimePlayed(){
+        return timePlayed;
+    }
+    
+    public void addTimePlayed(long time){
+        timePlayed += time;
+    }
+    
+    public void setTimePlayed(long time){
+        timePlayed = time;
     }
 
     /**

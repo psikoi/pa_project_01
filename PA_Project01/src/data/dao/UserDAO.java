@@ -26,12 +26,28 @@ public interface UserDAO {
     
     boolean updateEmail(String username, String newEmail);
     
-    boolean addGamePlayed(String username);
+    boolean addEasyGamePlayed(String username);
     
-    boolean addVictory(String username);
+    boolean addEasyVictory(String username);
     
-    boolean addLoss(String username);
+    boolean addEasyLoss(String username);
     
-    boolean addTimePlayed(String username, long time);
+    boolean addEasyTimePlayed(String username, long time);
+    
+    boolean addHardGamePlayed(String username);
+    
+    boolean addHardVictory(String username);
+    
+    boolean addHardLoss(String username);
+    
+    boolean addHardTimePlayed(String username, long time);
+    
+    boolean addPVPGamePlayed(String username);
+    
+    boolean addPVPVictory(String username);
+    
+    boolean addPVPLoss(String username);
+    
+    boolean addPVPTimePlayed(String username, long time);
 
 }

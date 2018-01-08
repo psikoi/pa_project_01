@@ -98,12 +98,12 @@ public class UserDAOSerialization implements UserDAO {
     }
     
     @Override
-    public boolean addGamePlayed(String username){
+    public boolean addEasyGamePlayed(String username){
         User user = data.get(username);
         if(user == null)
             return false;
         
-        user.addGamePlayed();
+        user.addEasyGamePlayed();
         
         data.replace(username, user);
         
@@ -113,13 +113,13 @@ public class UserDAOSerialization implements UserDAO {
     }
     
     @Override
-    public boolean addVictory(String username){
+    public boolean addEasyVictory(String username){
         User user = data.get(username);
         if(user == null){
             return false;
         }
         
-        user.addVictory();
+        user.addEasyVictory();
         
         data.replace(username, user);
         
@@ -129,13 +129,13 @@ public class UserDAOSerialization implements UserDAO {
     }
     
     @Override
-    public boolean addLoss(String username){
+    public boolean addEasyLoss(String username){
         User user = data.get(username);
         if(user == null){
             return false;
         }
         
-        user.addLoss();
+        user.addEasyLoss();
         
         data.replace(username, user);
         
@@ -145,13 +145,139 @@ public class UserDAOSerialization implements UserDAO {
     }
     
     @Override
-    public boolean addTimePlayed(String username, long time){
+    public boolean addEasyTimePlayed(String username, long time){
         User user = data.get(username);
         if(user == null){
             return false;
         }
         
-        user.addTimePlayed(time);
+        user.addEasyTimePlayed(time);
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addHardGamePlayed(String username){
+        User user = data.get(username);
+        if(user == null)
+            return false;
+        
+        user.addHardGamePlayed();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addHardVictory(String username){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addHardVictory();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addHardLoss(String username){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addHardLoss();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addHardTimePlayed(String username, long time){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addHardTimePlayed(time);
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addPVPGamePlayed(String username){
+        User user = data.get(username);
+        if(user == null)
+            return false;
+        
+        user.addPVPGamePlayed();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addPVPVictory(String username){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addPVPVictory();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addPVPLoss(String username){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addPVPLoss();
+        
+        data.replace(username, user);
+        
+        saveAll();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addPVPTimePlayed(String username, long time){
+        User user = data.get(username);
+        if(user == null){
+            return false;
+        }
+        
+        user.addPVPTimePlayed(time);
         
         data.replace(username, user);
         

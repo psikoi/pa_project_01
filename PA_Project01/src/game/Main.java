@@ -56,7 +56,7 @@ public class Main extends Application {
 
     private static Game createGame() {
 
-        DataHandler.setDao(new UserDAOJSON(), new MachineDAOSerialization());
+        DataHandler.setDao(new UserDAOSQLite(), new MachineDAOSQLite());
 
         Authentication.register("Ruben", "123", "ruben.amendoeira@gmail.com");
         Authentication.register("Tiago", "123321", "tiago.afsantos@hotmail.com");
@@ -70,7 +70,8 @@ public class Main extends Application {
         Machine machine = new Machine();
         DataHandler.insertPlayer(machine);
 
-        return new ComputerGame(loggedIn.get(0), machine, 1, 600, GameDifficulty.HARD);
+        //return new ComputerGame(loggedIn.get(0), machine, 1, 600, GameDifficulty.HARD);
+        return new Game(loggedIn.get(0), loggedIn.get(1), 1, 600);
     }
 
 }

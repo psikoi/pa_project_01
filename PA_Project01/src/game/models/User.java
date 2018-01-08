@@ -1,6 +1,9 @@
 package game.models;
 
 import data.dao.json.UserDAOJSON;
+import game.statistics.EasyStatistics;
+import game.statistics.HardStatistics;
+import game.statistics.PVPStatistics;
 
 /** This class represents an User. It extends from Player, allowing it to take
  * part in games and make a distinction between human players and the 
@@ -17,7 +20,8 @@ public class User extends Player {
      * User information.
      */
     private String username, password, email;
-
+    private PVPStatistics pvpStatistics;
+    
     /**
      * Constructs a new User with the specified attributes.
      * 
@@ -29,6 +33,7 @@ public class User extends Player {
         this.username = username;
         this.password = password;
         this.email = email;
+        pvpStatistics = new PVPStatistics();
     }
 
     /**
@@ -84,6 +89,53 @@ public class User extends Player {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public int getPVPGamesPlayed() {
+        return pvpStatistics.getGamesPlayed();
+    }
 
+    public void setPVPGamesPlayed(int gamesPlayed) {
+        this.pvpStatistics.setGamesPlayed(gamesPlayed);
+    }
+    
+    public void addPVPGamePlayed(){
+        pvpStatistics.addGamePlayed();
+    }
+    
+    public int getPVPLosses(){
+        return pvpStatistics.getLosses();
+    }
+    
+    public void addPVPLoss(){
+        pvpStatistics.addLoss();
+    }
+    
+    public void setPVPLosses(int losses){
+        pvpStatistics.setLosses(losses);
+    }
+    
+    public long getPVPTimePlayed(){
+        return pvpStatistics.getTimePlayed();
+    }
+    
+    public void addPVPTimePlayed(long time){
+        pvpStatistics.addTimePlayed(time);
+    }
+    
+    public void setPVPTimePlayed(long time){
+        pvpStatistics.setTimePlayed(time);
+    }
+
+    public int getPVPVictories() {
+        return pvpStatistics.getVictories();
+    }
+
+    public void setPVPVictories(int victories) {
+        pvpStatistics.setVictories(victories);
+    }
+
+    public void addPVPVictory(){
+        pvpStatistics.addVictory();
+    }
     
 }

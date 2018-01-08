@@ -2,6 +2,7 @@ package game.models;
 
 import game.factories.ComputerMoveStrategyFactory;
 import game.strategies.ComputerMoveStrategy;
+import game.strategies.moves.EasyComputerMove;
 import tads.graph.Edge;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;
@@ -29,6 +30,10 @@ public class ComputerGame extends Game {
 
     public void setThinking(boolean thinking) {
         this.thinking = thinking;
+    }
+    
+    public boolean isDifficultyEasy(){
+        return (moveStrategy instanceof EasyComputerMove);
     }
     
     

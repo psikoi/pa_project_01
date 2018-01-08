@@ -18,7 +18,12 @@ public class SessionManager {
     }
     
     public static ArrayList<User> getLoggedInUsers(){
+        
+        
         ArrayList<User> users = new ArrayList<>();
+        
+        if(userSessions == null)
+            return users;
         
         for(UserSession userSession : userSessions){
             users.add(userSession.getUser());

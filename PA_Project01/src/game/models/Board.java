@@ -163,12 +163,7 @@ public class Board {
     }
 
     public void setMemento(BoardMemento memento) {
-        System.out.println("-- " + memento.getFigure().numSelectedEdges());
-        System.out.println(memento.getFigure().getGraph());
-        System.out.println("before: " + this.numSelectedEdges());
         this.graph = memento.getFigure().getGraph();
-        System.out.println(graph);
-        System.out.println("after: " + this.numSelectedEdges());
     }
 
     public MyGraph<Joint, Connection> getGraph() {

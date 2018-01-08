@@ -7,7 +7,7 @@ import game.strategies.moves.HardComputerMove;
 
 public class ComputerMoveStrategyFactory {
 
-    public ComputerMoveStrategy make(GameDifficulty difficulty) {
+    public ComputerMoveStrategy create(GameDifficulty difficulty) {
         switch (difficulty) {
             case EASY:
                 return new EasyComputerMove();

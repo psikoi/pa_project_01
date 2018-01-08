@@ -14,7 +14,7 @@ public class ComputerGame extends Game {
     public ComputerGame(Player player1, Machine machine, 
             int level, int maxWidth, GameDifficulty difficulty) {
         super(player1, machine, level, maxWidth);
-        this.moveStrategy  = new ComputerMoveStrategyFactory().make(difficulty);
+        this.moveStrategy  = new ComputerMoveStrategyFactory().create(difficulty);
     }
 
 

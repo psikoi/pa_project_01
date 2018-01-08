@@ -1,41 +1,28 @@
 package game;
 
 import data.DataHandler;
-import data.dao.json.*;
-import data.dao.serialization.*;
-import data.dao.sqlite.*;
-import game.models.ComputerGame;
-import game.models.Game;
-import game.models.GameDifficulty;
-import game.models.Machine;
-import game.models.User;
-import graphics.presenters.GamePresenter;
-import graphics.views.GameView;
-import java.util.ArrayList;
+import data.dao.sqlite.MachineDAOSQLite;
+import data.dao.sqlite.UserDAOSQLite;
+import graphics.views.menus.HomeScreenMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-
 import javafx.stage.Stage;
 import session.Authentication;
-import session.SessionManager;
 
 public class Main extends Application {
 
     public static Stage stage;
-
-    public static GamePresenter gamePresenter;
+    public static int screenWidth = 650;
 
     @Override
     public void start(Stage primaryStage) {
 
         stage = primaryStage;
 
-        Pane contentPane = new Pane();
+        Scene scene = new Scene(new Pane(), screenWidth, screenWidth);
 
-        contentPane.getChildren().add(gamePresenter.getView());
-
-        Scene scene = new Scene(contentPane, 600, 600);
+        scene.setRoot(new HomeScreenMenu());
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -44,18 +31,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        Game game = createGame();
-
-        game.start();
-
-        gamePresenter = new GamePresenter(game, new GameView(game));
-
-        launch(args);
-
-    }
-
-    private static Game createGame() {
-
         DataHandler.setDao(new UserDAOSQLite(), new MachineDAOSQLite());
 
         Authentication.register("Ruben", "123", "ruben.amendoeira@gmail.com");
@@ -63,14 +38,13 @@ public class Main extends Application {
         Authentication.register("Rui", "tshirt", "rui.miguel@hotmail.com");
 
         Authentication.login("Ruben", "123");
-        Authentication.login("Tiago", "123321");
 
-        ArrayList<User> loggedIn = SessionManager.getLoggedInUsers();
-        
-        Machine machine = new Machine();
-        DataHandler.insertPlayer(machine);
+        launch(args);
 
-        return new Game(loggedIn.get(0), loggedIn.get(1), 1, 600);
+    }
+
+    public static void switchContent(Pane pane) {
+        stage.getScene().setRoot(pane);
     }
 
 }

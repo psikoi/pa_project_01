@@ -57,7 +57,7 @@ public class EdgeLine extends Line {
 
     public void select() {
         setStroke(connection.element().getSelector().getPlayerIndex()
-                == 0 ? FIRST_SELECT_COLOR : SECOND_SELECT_COLOR);
+                == 1 ? FIRST_SELECT_COLOR : SECOND_SELECT_COLOR);
         setStrokeWidth(SELECTED_LINE_WIDTH);
     }
 

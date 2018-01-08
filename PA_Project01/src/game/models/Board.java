@@ -68,7 +68,7 @@ public class Board {
                     edges.add(selected);
                     edges.add(incident);
                     edges.add(oppositeIncident);
-                    break;
+                    return edges;
                 }
 
             }

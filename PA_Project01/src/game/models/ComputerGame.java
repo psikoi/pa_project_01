@@ -8,8 +8,6 @@ import tads.graph.model.Connection;
 import tads.graph.model.Joint;
 
 public class ComputerGame extends Game {
-
-    private boolean thinking;
     
     private ComputerMoveStrategy moveStrategy;
 
@@ -22,14 +20,6 @@ public class ComputerGame extends Game {
 
     public Edge<Connection, Joint> getNextMove() {
         return moveStrategy.calculateMove(this);
-    }
-
-    public boolean isThinking() {
-        return thinking;
-    }
-
-    public void setThinking(boolean thinking) {
-        this.thinking = thinking;
     }
     
     public boolean isDifficultyEasy(){

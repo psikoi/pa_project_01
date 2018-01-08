@@ -1,7 +1,7 @@
 package graphics.views;
 
-import game.models.Board;
 import game.models.Game;
+import game.models.User;
 import graphics.Presenter;
 import graphics.View;
 import graphics.custom.EdgeLine;
@@ -57,7 +57,9 @@ public class GameView extends Pane implements View {
         int i = 0;
         for (Edge<Connection, Joint> edge : game.getBoard().edges()) {
             edgeLines.get(i).setOnMouseClicked((event) -> {
-                gamePresenter.executePlay(edge);
+                if (game.getActivePlayer() instanceof User) {
+                    gamePresenter.executePlay(edge);
+                }
             });
             i++;
         }

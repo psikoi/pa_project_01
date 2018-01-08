@@ -25,14 +25,14 @@ public class GamePresenter implements Presenter {
     }
 
     public void executePlay(Edge<Connection, Joint> edge) {
-        
-        if(edge.element().isSelected())
+
+        if (edge.element().isSelected()) {
             return;
+        }
 
         if (model.play(edge)) {
             view.selectEdge(edge);
             view.changeUndo(model.canUndo(edge.element().getSelector()));
-            
 
             if (model.isFinished()) {
                 view.displaySolution(model.getTriangleEdges());
@@ -50,11 +50,6 @@ public class GamePresenter implements Presenter {
 
     private void automatedPlay() {
         ComputerGame cgame = (ComputerGame) model;
-        cgame.setThinking(true);
-
-        executePlay(cgame.getNextMove());
-        cgame.setThinking(false);
-        
 
         Timer delay = new Timer();
 
@@ -63,9 +58,10 @@ public class GamePresenter implements Presenter {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
-                        executePlay(cgame.getNextMove());
-                        cgame.setThinking(false);
-                        delay.cancel();
+                        if (model.getActivePlayer() instanceof Machine) {
+                            executePlay(cgame.getNextMove());
+                            delay.cancel();
+                        }
                     }
                 });
             }

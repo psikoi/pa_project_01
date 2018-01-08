@@ -111,7 +111,7 @@ public class Game {
     }
 
     public boolean canUndo(Player player) {
-       return player.getUndoCount() == 0;
+       return player instanceof User && player.getUndoCount() == 0;
     }
 
     public void start() {

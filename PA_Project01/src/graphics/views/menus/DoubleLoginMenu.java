@@ -4,6 +4,7 @@ import game.Main;
 import game.factories.GameFactory;
 import game.models.Game;
 import game.models.GameDifficulty;
+import graphics.custom.BackButton;
 import graphics.presenters.GamePresenter;
 import graphics.views.GameView;
 import javafx.geometry.Pos;
@@ -15,6 +16,7 @@ import session.SessionManager;
 
 public class DoubleLoginMenu extends HBox {
 
+    private BackButton back; 
     public int loginActions;
     public int automaticLogin;
 
@@ -41,9 +43,9 @@ public class DoubleLoginMenu extends HBox {
                 loginActions++;
                 leftMenu.setReady();
                 checkReady();
-            } else {
-                leftMenu.alertLoginFailure();
-            }
+            }// else {
+             //   leftMenu.alertLoginFailure();
+            //}
         });
 
         rightMenu.getLoginButton().setOnAction((event) -> {
@@ -51,9 +53,9 @@ public class DoubleLoginMenu extends HBox {
                 loginActions++;
                 rightMenu.setReady();
                 checkReady();
-            } else {
-                rightMenu.alertLoginFailure();
-            }
+            } //else {
+               // rightMenu.alertLoginFailure();
+            //}
         });
 
         leftMenu.getSelectButton().setOnAction((event) -> {
@@ -85,6 +87,13 @@ public class DoubleLoginMenu extends HBox {
 
             checkReady();
         });
+        
+        back = new BackButton(new Runnable() {
+            @Override
+            public void run() {
+                Main.switchContent(new PlayerTypeSelectionMenu());
+            }
+        });
 
         VBox left = new VBox(10);
         left.setAlignment(Pos.CENTER);
@@ -97,9 +106,20 @@ public class DoubleLoginMenu extends HBox {
 
         right.getChildren().add(player2);
         right.getChildren().add(rightMenu);
+       
+        HBox topHbox = new HBox();
+        topHbox.getChildren().add(back);
+        topHbox.setMaxHeight(20);
+        topHbox.setTranslateY(-304);
+        topHbox.setTranslateX(-20);
 
+        left.setTranslateX(-30);
+        right.setTranslateX(-30);
+        
+        getChildren().add(topHbox);
         getChildren().add(left);
         getChildren().add(right);
+        
 
     }
 

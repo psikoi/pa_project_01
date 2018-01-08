@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data.dao.json;
 
 import data.dao.MachineDAO;
@@ -22,7 +17,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Implements JSON Persistence. Creates a file named "machine.json" that will
+ * keep information about the Machine. The file only keeps one machine, and when
+ * a computer game is being saved, it will increment the statistics of that one machine.
+ * 
+ * @author Ruben
  * @author Tiago
  */
 public class MachineDAOJSON implements MachineDAO{
@@ -35,6 +34,10 @@ public class MachineDAOJSON implements MachineDAO{
        this.data = loadAll();
     }
     
+    /**
+     * Selects the machine being kept in file.
+     * @return machine being kept in file.
+     */
     @Override
    public Machine select() {
        return data.get("Machine");

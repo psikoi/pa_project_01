@@ -49,5 +49,15 @@ public class SmallStyledButton extends Button {
         this.clickable = clickable;
         setDisable(!clickable);
     }
+    
+    private void run(Runnable action){
+        action.run();
+    }
+    
+    public void changeAction(Runnable action){
+        setOnAction(e -> {
+            run(action);
+        });
+    }
 
 }

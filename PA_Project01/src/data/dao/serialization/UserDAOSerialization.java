@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data.dao.serialization;
 
 import data.dao.UserDAO;
@@ -21,7 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Implements Serialization. Creates a file named "user.dat" that will
+ * keep information about every User. 
+ * 
+ * @author Ruben
  * @author Tiago
  */
 public class UserDAOSerialization implements UserDAO {

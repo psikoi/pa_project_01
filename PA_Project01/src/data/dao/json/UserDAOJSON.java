@@ -24,8 +24,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Implements JSON Persistence. Creates a file named "user.json" that will
+ * keep information about every User. 
  *
  * @author Tiago
+ * @author Ruben
  */
 public class UserDAOJSON implements UserDAO{
     

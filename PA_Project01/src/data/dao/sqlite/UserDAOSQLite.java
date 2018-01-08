@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data.dao.sqlite;
 
 import data.dao.UserDAO;
@@ -19,7 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Implements SQLite. Creates a file named "user.db" that will
+ * keep information about every User in a database. 
+ * 
+ * @author Ruben
  * @author Tiago
  */
 public class UserDAOSQLite implements UserDAO {

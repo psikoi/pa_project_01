@@ -10,11 +10,17 @@ import game.models.Player;
 import game.models.User;
 
 /**
- *
+ * DataHandler handles the data in the files. It inserts users and machines to 
+ * the files, and increments their statistics.
+ * 
+ * @author Ruben
  * @author Tiago
  */
 public class DataHandler {
 
+    /**
+     * Type of DAO used. The possible options are JSON, Serialization and SQLite.
+     */
     private static UserDAO userDao;
     private static MachineDAO machineDao;
 
@@ -23,6 +29,10 @@ public class DataHandler {
         machineDao = machine;
     }
 
+    /**
+     * Inserts a user or a machine into the files.
+     * @param player - player being inserted.
+     */
     public static void insertPlayer(Player player) {
         if (player instanceof User) {
             String password = encryptText(((User) player).getPassword());
@@ -38,7 +48,15 @@ public class DataHandler {
     public static User selectUser(String username) {
         return userDao.select(username);
     }
+    
+    public static Machine getMachine(){
+        return machineDao.select();
+    }
 
+    /**
+     * Updates the statistics of the players in the files.
+     * @param game - game being saved.
+     */
     public static void saveGame(Game game) {
 
         if (game instanceof ComputerGame) {
@@ -52,12 +70,17 @@ public class DataHandler {
         }
     }
 
+    /**
+     * Increments the statistics of the easy difficulty of the players in
+     * the files (one of them being an User, and the other being a Machine).
+     * @param game - game that ended, and is being used to update the statistics.
+     */
     private static void saveEasyGame(Game game) {
         machineDao.addEasyGamePlayed();
         machineDao.addEasyTimePlayed(game.getDuration());
 
         if (game.getInactivePlayer() instanceof User) {
-            //user ganhou
+            //user won
             Player user = game.getInactivePlayer();
             userDao.addEasyGamePlayed(((User) user).getUsername());
             userDao.addEasyVictory(((User) user).getUsername());
@@ -68,7 +91,7 @@ public class DataHandler {
         }
 
         if (game.getActivePlayer() instanceof User) {
-            //user perdeu
+            //user lost
             Player user = game.getActivePlayer();
             userDao.addEasyGamePlayed(((User) user).getUsername());
             userDao.addEasyLoss(((User) user).getUsername());
@@ -79,6 +102,11 @@ public class DataHandler {
         }
     }
 
+    /**
+     * Increments the statistics of the hard difficulty of the players in
+     * the files (one of them being an User, and the other being a Machine).
+     * @param game - game that ended, and is being used to update the statistics.
+     */
     private static void saveHardGame(Game game) {
         machineDao.addHardGamePlayed();
         machineDao.addHardTimePlayed(game.getDuration());
@@ -105,6 +133,11 @@ public class DataHandler {
         }
     }
     
+    /**
+     * Increments the statistics of the player vs player game mode of the
+     * players in the files (both of them being Users).
+     * @param game - game that ended, and is being used to update the statistics.
+     */
     private static void savePVPGame(Game game){
         String activeUsername = ((User)game.getActivePlayer()).getUsername();
         String inactiveUsername = ((User)game.getInactivePlayer()).getUsername();
@@ -121,6 +154,12 @@ public class DataHandler {
         userDao.addPVPLoss(activeUsername);
     }
 
+    /**
+     * Method that uses the MD5Encrypter to encrypt text. Used when saving Users 
+     * to the files, encrypting their passwords.
+     * @param text - text being encrypted
+     * @return encrypted text
+     */
     private static String encryptText(String text) {
         return MD5Encrypter.md5Encryption(text);
     }

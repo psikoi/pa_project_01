@@ -3,7 +3,9 @@ package session;
 import game.models.User;
 
 /**
- *
+ * Represents a session.
+ * 
+ * @author Ruben
  * @author Tiago
  */
 public class UserSession {

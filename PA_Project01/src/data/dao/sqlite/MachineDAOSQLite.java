@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data.dao.sqlite;
 
 import data.dao.MachineDAO;
@@ -17,8 +12,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Implements SQLite. Creates a file named "machine.db" that will
+ * keep information about the Machine in a database. The database only keeps one machine,
+ * and when a computer game is being saved, it will increment the statistics of that one machine.
  *
  * @author Tiago
+ * @author Ruben
  */
 public class MachineDAOSQLite implements MachineDAO{
     
@@ -247,7 +246,6 @@ public class MachineDAOSQLite implements MachineDAO{
 
     private void strutureCreate() {
 
-        // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS Machine (\n"
                 + "	name varchar(50) PRIMARY KEY,\n"
                 + "     easyGamesPlayed int NOT NULL,\n"
@@ -262,7 +260,7 @@ public class MachineDAOSQLite implements MachineDAO{
 
         try (Connection sqlConnection = connect(); Statement stmt = sqlConnection.createStatement()){
 
-            // create a new table
+            
             stmt.execute(sql);
 
         } catch (SQLException ex) {

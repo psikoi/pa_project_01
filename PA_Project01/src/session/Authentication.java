@@ -3,67 +3,95 @@ package session;
 import data.DataHandler;
 import data.encryption.MD5Encrypter;
 import game.models.User;
+import session.exceptions.*;
 
 /**
- *
+ *  Authentication contains methods that allow users to log in, log out and 
+ *  create accounts. These methods are static and are acessed by other 
+ *  identities to aid in the logging in process.
+ * 
  * @author Tiago
+ * @author Ruben
  */
 public class Authentication {
 
-    public static boolean login(String username, String password) {
+    /**
+     * Allows a user to login to their account. Throws exceptions when errors in 
+     * the logging in process occur.
+     * @param username - Username
+     * @param password - Password
+     */
+    public static void login(String username, String password) {
 
-        //se já houverem 2 sessoes iniciadas
+        //se já houverem 2 sessões iniciadas
         if (SessionManager.getUserSessions().size() == 2) {
-            return false;
+            throw new TooManySessionsException();
         }
 
-        // se nao existir utilizador
+        // se não existir utilizador com o username recebido 
         if (!checkIfUserExists(username)) {
-            return false;
+            throw new NoUserFoundException();
         }
 
-        //se alguem ja tiver a sessao iniciada nesta conta, ele nao pode fazer login
+        //se a sessão nesta conta já se encontrar iniciada, o utilizador não poderá fazer login
         if (checkIfUserLoggedIn(username)) {
-            return false;
+            throw new AlreadyLoggedInException();
         }
 
         //verifica a password
         User aux = DataHandler.selectUser(username);
         if (!(MD5Encrypter.md5Encryption(password).equals(aux.getPassword()))) {
-            return false;
+            throw new IncorrectCredentialsException();
         }
 
-        //fazer login
+        //faz login
         UserSession session = new UserSession(aux);
         SessionManager.getUserSessions().add(session);
-        return true;
     }
 
-    public static boolean logout(String username) {
+    /**
+     * Allows a user to logout of their account. Throws exceptions if an error
+     * occurs in the logging out process.
+     * 
+     * @param username - Username.
+     */
+    public static void logout(String username) {
+        //se a conta não existir
         if (!checkIfUserExists(username)) {
-            return false;
+            throw new NoUserFoundException();
         }
-
+        
+        //se a conta não tiver a sessão iniciada
         if (!checkIfUserLoggedIn(username)) {
-            return false;
+            throw new NotLoggedInException();
         }
 
         SessionManager.removeSession(username);
-        return true;
     }
 
-    public static boolean register(String username, String password, String email) {
-        //se o utilizador existir
+    /**
+     * Allows a user to register an account. Uses the DataHandler to save the account
+     * to a file. Throws exception if an error occurs during the process.
+     * 
+     * @param username - Username of the new account.
+     * @param password - Password of the new account.
+     * @param email - Email of the new account.
+     */
+    public static void register(String username, String password, String email) {
+        //se o utilizador já existir
         if (checkIfUserExists(username)) {
-            return false;
+            throw new UserAlreadyExists();
         }
 
         User user = new User(username, password, email);
         DataHandler.insertPlayer(user);
-        return true;
     }
 
-    //true -> logged in, false -> not logged in
+    /**
+     * Checks if a user is logged in to their account.
+     * @param username - Username of the account being checked.
+     * @return true if there is an active session with the account, false if there isn't.
+     */
     private static boolean checkIfUserLoggedIn(String username) {
 
         for (UserSession userSession : SessionManager.getUserSessions()) {
@@ -74,7 +102,11 @@ public class Authentication {
         return false;
     }
 
-    //true -> existe, false -> nao existe
+    /**
+     * Checks if an account with a specific username already exists in the files.
+     * @param username - Username being checked.
+     * @return true if there is an account with the username received, false if there isn't.
+     */
     private static boolean checkIfUserExists(String username) {
         User aux = DataHandler.selectUser(username);
 

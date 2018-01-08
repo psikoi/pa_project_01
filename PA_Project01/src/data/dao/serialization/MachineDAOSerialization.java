@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data.dao.serialization;
 
 import data.dao.MachineDAO;
@@ -19,8 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Implements Serialization. Creates a file named "machine.dat" that will
+ * keep information about the Machine. The file only keeps one machine, and when
+ * a computer game is being saved, it will increment the statistics of that one machine.
+ * 
  * @author Tiago
+ * @author Ruben
  */
 public class MachineDAOSerialization implements MachineDAO {
     

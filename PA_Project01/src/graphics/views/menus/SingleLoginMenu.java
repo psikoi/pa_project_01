@@ -1,7 +1,9 @@
 package graphics.views.menus;
 
+import static com.sun.glass.ui.Application.run;
 import game.Main;
 import game.models.User;
+import graphics.custom.BackButton;
 import graphics.custom.SmallStyledButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +17,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -27,11 +30,13 @@ public class SingleLoginMenu extends VBox {
 
     SmallStyledButton loginButton;
     SmallStyledButton selectButton;
-    
+
     TextField usernameField;
     PasswordField passwordField;
-    
+
     ComboBox<String> userSelection;
+
+    private VBox selectionContainer;
 
     public SingleLoginMenu() {
 
@@ -74,8 +79,6 @@ public class SingleLoginMenu extends VBox {
 
             if (login()) {
                 Main.switchContent(new ComputerDifficultySelectionMenu());
-            } else {
-                alertLoginFailure();
             }
 
         });
@@ -87,7 +90,7 @@ public class SingleLoginMenu extends VBox {
         loginContainer.getChildren().add(spacer);
         loginContainer.getChildren().add(loginButton);
 
-        VBox selectionContainer = new VBox(15);
+        selectionContainer = new VBox(15);
         selectionContainer.setPrefSize(250, 200);
         selectionContainer.setMaxWidth(250);
         selectionContainer.setStyle("-fx-background-color: #ededed;");
@@ -130,7 +133,13 @@ public class SingleLoginMenu extends VBox {
     }
 
     public boolean login() {
-        return Authentication.login(usernameField.getText(), passwordField.getText());
+        try {
+            Authentication.login(usernameField.getText(), passwordField.getText());
+            return true;
+        } catch (RuntimeException e) {
+            alertLoginFailure(e.getMessage());
+            return false;
+        }
     }
 
     public void setReady() {
@@ -145,12 +154,12 @@ public class SingleLoginMenu extends VBox {
 
     }
 
-    public void alertLoginFailure() {
+    public void alertLoginFailure(String message) {
 
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Erro");
         alert.setHeaderText("Ocorreu um erro na autenticação");
-        alert.setContentText("Tente novamente, confirmando que escreveu a informação correcta.");
+        alert.setContentText(message);
 
         alert.showAndWait();
     }
@@ -166,7 +175,19 @@ public class SingleLoginMenu extends VBox {
     public ComboBox<String> getUserSelection() {
         return userSelection;
     }
-    
-    
+
+    public void removeAlreadyLoggedIn() {
+        getChildren().remove(selectionContainer);
+        loginButton.setOnAction(e -> {
+            if (login()) {
+                Main.switchContent(new HomeScreenMenu());
+            }
+        });
+
+    }
+
+    public String getUsername() {
+        return usernameField.getText();
+    }
 
 }

@@ -1,9 +1,13 @@
 package game;
 
 import data.DataHandler;
-import data.dao.sqlite.MachineDAOSQLite;
-import data.dao.sqlite.UserDAOSQLite;
+import data.dao.json.*;
+import data.dao.sqlite.*;
+import data.dao.serialization.*;
 import graphics.views.menus.HomeScreenMenu;
+import graphics.views.menus.LoginMenu;
+import graphics.views.menus.RegisterMenu;
+import graphics.views.menus.SingleLoginMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -23,7 +27,6 @@ public class Main extends Application {
         Scene scene = new Scene(new Pane(), screenWidth, screenWidth);
 
         scene.setRoot(new HomeScreenMenu());
-
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -31,13 +34,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        DataHandler.setDao(new UserDAOSQLite(), new MachineDAOSQLite());
-
-        Authentication.register("Ruben", "123", "ruben.amendoeira@gmail.com");
-        Authentication.register("Tiago", "123321", "tiago.afsantos@hotmail.com");
-        Authentication.register("Rui", "tshirt", "rui.miguel@hotmail.com");
-
-        Authentication.login("Ruben", "123");
+        DataHandler.setDao(new UserDAOJSON(), new MachineDAOJSON());
 
         launch(args);
 

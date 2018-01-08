@@ -4,6 +4,7 @@ import game.Main;
 import game.factories.GameFactory;
 import game.models.Game;
 import game.models.GameDifficulty;
+import graphics.custom.BackButton;
 import graphics.custom.StyledButton;
 import graphics.presenters.GamePresenter;
 import graphics.views.GameView;
@@ -16,6 +17,7 @@ import javafx.scene.text.FontWeight;
 
 public class ComputerDifficultySelectionMenu extends VBox {
 
+    private BackButton back;
     private StyledButton easy;
     private StyledButton hard;
 
@@ -41,10 +43,27 @@ public class ComputerDifficultySelectionMenu extends VBox {
         hard.setOnAction((event) -> {
             startGame(new GameFactory().create(GameDifficulty.HARD));
         });
+        
+        back = new BackButton(new Runnable() {
+            @Override
+            public void run() {
+                Main.switchContent(new LoginMenu());
+            }
+        });
+        
+        
+        HBox topHbox = new HBox();
+        topHbox.getChildren().add(back);
+        topHbox.setMaxHeight(20);
+        topHbox.setTranslateY(-235);
 
         hbox.getChildren().add(easy);
         hbox.getChildren().add(hard);
+        hbox.setTranslateY(-50);
 
+        question.setTranslateY(-50);
+        
+        getChildren().add(topHbox);
         getChildren().add(question);
         getChildren().add(hbox);
 

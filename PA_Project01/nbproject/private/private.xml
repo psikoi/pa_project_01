@@ -3,9 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ruben/Desktop/pa_project_01/PA_Project01/src/graphics/custom/SmallStyledButton.java</file>
-            <file>file:/C:/Users/Ruben/Desktop/pa_project_01/PA_Project01/src/graphics/views/GameView.java</file>
-            <file>file:/C:/Users/Ruben/Desktop/pa_project_01/PA_Project01/src/graphics/custom/EdgeLine.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/session/Authentication.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/session/exceptions/TooManySessionsException.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/session/exceptions/NotLoggedInException.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/session/SessionManager.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/game/models/ComputerGame.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/game/Main.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/graphics/views/menus/SingleLoginMenu.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/graphics/views/menus/HomeScreenMenu.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/graphics/views/menus/LoginMenu.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/game/models/Board.java</file>
+            <file>file:/D:/Software/NetBeansProjects/pa_project_01/PA_Project01/src/graphics/views/menus/AccountOptionsMenu.java</file>
         </group>
     </open-files>
 </project-private>

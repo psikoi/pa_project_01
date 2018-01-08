@@ -83,7 +83,7 @@ public class HardComputerMove implements ComputerMoveStrategy {
                 next = tree.parent(next);
             }
 
-            for (Edge<Connection, Joint> edge : prev.element().edges()) {
+            for (Edge<Connection, Joint> edge : prev.element().getGraph().edges()) {
                 if (edge.element().getSelector() instanceof Machine) {
                     Edge<Connection, Joint> chosen = game.getBoard().findIdentical(edge);
                     if (chosen.element().isSelected()) {
@@ -132,7 +132,7 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
     private Edge<Connection, Joint> difference(Board a, Board b) {
 
-        for (Edge<Connection, Joint> edge : a.edges()) {
+        for (Edge<Connection, Joint> edge : a.getGraph().edges()) {
             if (edge.element().isSelected()) {
                 Edge<Connection, Joint> identical = b.findIdentical(edge);
                 if (identical == null || !identical.element().isSelected()) {

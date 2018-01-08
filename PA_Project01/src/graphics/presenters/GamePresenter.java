@@ -60,8 +60,8 @@ public class GamePresenter implements Presenter {
                     public void run() {
                         if (model.getActivePlayer() instanceof Machine) {
                             executePlay(cgame.getNextMove());
-                            delay.cancel();
                         }
+                        delay.cancel();
                     }
                 });
             }
@@ -70,12 +70,10 @@ public class GamePresenter implements Presenter {
     }
 
     public void undoPlay() {
-        Connection undo = model.undoMove();
-        if (undo != null) {
-            view.changeUndo(model.canUndo(model.getActivePlayer()));
-            view.undoEdge(undo);
-        }
-
+        model.undoMove();
+        view.reevaluateEdges(model);
+        view.setTriggers(this);
+        view.changeUndo(model.canUndo(model.getActivePlayer()));
     }
 
     public GameView getView() {

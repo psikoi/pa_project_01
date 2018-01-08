@@ -32,13 +32,13 @@ public class GameView extends Pane implements View {
         this.game = game;
 
         this.edgeLines = new ArrayList<>();
-        for (Edge<Connection, Joint> edge : game.getBoard().edges()) {
+        for (Edge<Connection, Joint> edge : game.getBoard().getGraph().edges()) {
             EdgeLine line = new EdgeLine(edge);
             edgeLines.add(line);
             getChildren().add(line);
         }
 
-        for (Vertex<Joint> vertex : game.getBoard().vertices()) {
+        for (Vertex<Joint> vertex : game.getBoard().getGraph().vertices()) {
             getChildren().add(new Circle(vertex.element().getX(), vertex.element().getY(), 5));
         }
 
@@ -55,7 +55,7 @@ public class GameView extends Pane implements View {
         GamePresenter gamePresenter = (GamePresenter) presenter;
 
         int i = 0;
-        for (Edge<Connection, Joint> edge : game.getBoard().edges()) {
+        for (Edge<Connection, Joint> edge : game.getBoard().getGraph().edges()) {
             edgeLines.get(i).setOnMouseClicked((event) -> {
                 if (game.getActivePlayer() instanceof User) {
                     gamePresenter.executePlay(edge);
@@ -71,6 +71,23 @@ public class GameView extends Pane implements View {
             }
         });
 
+    }
+
+    public void reevaluateEdges(Game game) {
+        for (EdgeLine line : edgeLines) {
+            getChildren().remove(line);
+        }
+
+        this.edgeLines = new ArrayList<>();
+        for (Edge<Connection, Joint> edge : game.getBoard().getGraph().edges()) {
+            EdgeLine line = new EdgeLine(edge);
+            
+            if(line.getConnection().element().isSelected())
+                line.select();
+            
+            edgeLines.add(line);
+            getChildren().add(line);
+        }
     }
 
     public void selectEdge(Edge<Connection, Joint> connection) {

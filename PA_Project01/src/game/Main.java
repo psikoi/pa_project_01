@@ -70,7 +70,6 @@ public class Main extends Application {
         Machine machine = new Machine();
         DataHandler.insertPlayer(machine);
 
-        //return new ComputerGame(loggedIn.get(0), machine, 1, 600, GameDifficulty.HARD);
         return new Game(loggedIn.get(0), loggedIn.get(1), 1, 600);
     }
 

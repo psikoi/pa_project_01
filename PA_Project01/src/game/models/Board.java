@@ -1,19 +1,21 @@
 package game.models;
 
+import game.memento.BoardMemento;
 import java.util.ArrayList;
-import java.util.HashSet;
 import tads.graph.Edge;
 import tads.graph.MyGraph;
 import tads.graph.Vertex;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;
 
-public class Board extends MyGraph<Joint, Connection> {
+public class Board {
 
+    private MyGraph<Joint, Connection> graph;
     private int width;
 
     public Board(int width) {
         this.width = width;
+        this.graph = new MyGraph<>();
     }
 
     public void generate(int size) {
@@ -26,13 +28,13 @@ public class Board extends MyGraph<Joint, Connection> {
         for (int i = 0; i < num; i++) {
             int x = (int) (startX + edgeWidth * Math.cos(i * 2 * Math.PI / num));
             int y = (int) (startY + edgeWidth * Math.sin(i * 2 * Math.PI / num));
-            insertVertex(new Joint(x, y));
+            graph.insertVertex(new Joint(x, y));
         }
 
-        for (Vertex<Joint> v : vertices()) {
-            for (Vertex<Joint> v2 : vertices()) {
-                if (!v2.equals(v) && !areAdjacent(v, v2)) {
-                    insertEdge(v, v2, new Connection());
+        for (Vertex<Joint> v : graph.vertices()) {
+            for (Vertex<Joint> v2 : graph.vertices()) {
+                if (!v2.equals(v) && !graph.areAdjacent(v, v2)) {
+                    graph.insertEdge(v, v2, new Connection());
                 }
 
             }
@@ -44,7 +46,7 @@ public class Board extends MyGraph<Joint, Connection> {
 
         ArrayList<Edge<Connection, Joint>> edges = new ArrayList<>();
 
-        for (Edge<Connection, Joint> incident : incidentEdges(selected.vertices()[0])) {
+        for (Edge<Connection, Joint> incident : graph.incidentEdges(selected.vertices()[0])) {
 
             Player selector = incident.element().getSelector();
 
@@ -52,9 +54,9 @@ public class Board extends MyGraph<Joint, Connection> {
                 continue;
             }
 
-            Vertex<Joint> opposite = opposite(selected.vertices()[0], incident);
+            Vertex<Joint> opposite = graph.opposite(selected.vertices()[0], incident);
 
-            for (Edge<Connection, Joint> oppositeIncident : incidentEdges(opposite)) {
+            for (Edge<Connection, Joint> oppositeIncident : graph.incidentEdges(opposite)) {
 
                 Player selector2 = oppositeIncident.element().getSelector();
 
@@ -62,7 +64,7 @@ public class Board extends MyGraph<Joint, Connection> {
                     continue;
                 }
 
-                if (opposite(opposite, oppositeIncident) == selected.vertices()[1]) {
+                if (graph.opposite(opposite, oppositeIncident) == selected.vertices()[1]) {
                     edges.add(selected);
                     edges.add(incident);
                     edges.add(oppositeIncident);
@@ -75,9 +77,8 @@ public class Board extends MyGraph<Joint, Connection> {
         return edges;
     }
 
-  
     public Edge<Connection, Joint> find(Connection connection) {
-        for (Edge<Connection, Joint> edge : this.edges()) {
+        for (Edge<Connection, Joint> edge : graph.edges()) {
             if (edge.element().equals(connection)) {
                 return edge;
             }
@@ -87,7 +88,7 @@ public class Board extends MyGraph<Joint, Connection> {
 
     public Edge<Connection, Joint> findIdentical(Edge<Connection, Joint> edge) {
 
-        for (Edge<Connection, Joint> e : this.edges()) {
+        for (Edge<Connection, Joint> e : graph.edges()) {
 
             Joint j1 = e.vertices()[0].element();
             Joint j2 = e.vertices()[1].element();
@@ -104,7 +105,7 @@ public class Board extends MyGraph<Joint, Connection> {
     }
 
     public Vertex<Joint> findIdentical(Vertex<Joint> joint) {
-        for (Vertex<Joint> vertex : vertices()) {
+        for (Vertex<Joint> vertex : graph.vertices()) {
             Joint j = vertex.element();
             Joint m = joint.element();
             if (j.getX() == m.getX() && j.getY() == m.getY()) {
@@ -118,7 +119,7 @@ public class Board extends MyGraph<Joint, Connection> {
 
         ArrayList<Edge<Connection, Joint>> possibleMoves = new ArrayList<>();
 
-        for (Edge<Connection, Joint> edge : edges()) {
+        for (Edge<Connection, Joint> edge : graph.edges()) {
             if (!edge.element().isSelected()) {
                 possibleMoves.add(edge);
             }
@@ -131,9 +132,10 @@ public class Board extends MyGraph<Joint, Connection> {
 
     public int numSelectedEdges() {
         int count = 0;
-        for (Edge<Connection, Joint> e : edges()) {
-            if(e.element().isSelected())
+        for (Edge<Connection, Joint> e : graph.edges()) {
+            if (e.element().isSelected()) {
                 count++;
+            }
         }
         return count;
     }
@@ -142,18 +144,35 @@ public class Board extends MyGraph<Joint, Connection> {
 
         Board board = new Board(width);
 
-        for (Vertex<Joint> v : vertices()) {
-            board.insertVertex(v.element().copy());
+        for (Vertex<Joint> v : graph.vertices()) {
+            board.getGraph().insertVertex(v.element().copy());
         }
 
-        for (Edge<Connection, Joint> e : edges()) {
+        for (Edge<Connection, Joint> e : graph.edges()) {
             Vertex<Joint> v = e.vertices()[0];
             Vertex<Joint> v2 = e.vertices()[1];
-            board.insertEdge(board.findIdentical(v), board.findIdentical(v2), e.element().copy());
+            board.getGraph().insertEdge(board.findIdentical(v), board.findIdentical(v2), e.element().copy());
         }
 
         return board;
 
+    }
+
+    public Board createMemento() {
+        return copy();
+    }
+
+    public void setMemento(BoardMemento memento) {
+        System.out.println("-- " + memento.getFigure().numSelectedEdges());
+        System.out.println(memento.getFigure().getGraph());
+        System.out.println("before: " + this.numSelectedEdges());
+        this.graph = memento.getFigure().getGraph();
+        System.out.println(graph);
+        System.out.println("after: " + this.numSelectedEdges());
+    }
+
+    public MyGraph<Joint, Connection> getGraph() {
+        return graph;
     }
 
 }

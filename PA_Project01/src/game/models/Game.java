@@ -1,6 +1,7 @@
 package game.models;
 
 import data.DataHandler;
+import game.memento.BoardMementoCareTaker;
 import java.util.ArrayList;
 import tads.graph.Edge;
 import tads.graph.model.Connection;
@@ -20,6 +21,8 @@ public class Game {
 
     private int maxWidth;
 
+    private BoardMementoCareTaker mementoCareTaker;
+
     private ArrayList<Edge<Connection, Joint>> triangleEdges;
 
     public Game(Player player1, Player player2, int level, int maxWidth) {
@@ -38,6 +41,8 @@ public class Game {
         this.rounds = new ArrayList<>();
 
         this.activePlayerIndex = 0;
+
+        this.mementoCareTaker = new BoardMementoCareTaker();
 
     }
 
@@ -111,15 +116,16 @@ public class Game {
     }
 
     public boolean canUndo(Player player) {
-       return player instanceof User && player.getUndoCount() == 0;
+        return player instanceof User && player.getUndoCount() == 0;
     }
 
     public void start() {
         this.player1.setUndoCount(0);
         this.player2.setUndoCount(0);
-        
+
         this.board.generate(level + 5);
-        
+        this.mementoCareTaker.saveState(board);
+
         this.rounds.clear();
         this.rounds.add(new Round(player1));
     }
@@ -129,26 +135,22 @@ public class Game {
         switchPlayerTurn();
     }
 
-    public Connection undoMove() {
-        return undoMove(getInactivePlayer());
+    public void undoMove() {
+        undoMove(getInactivePlayer());
     }
 
-    public Connection undoMove(Player player) {
+    public void undoMove(Player player) {
 
         if (isFinished() || rounds.size() < 2 || !canUndo(player)) {
-            return null;
+            return;
         }
-
-        Round secToLast = rounds.get(rounds.size() - 2);
-        Connection unselected = secToLast.getSelectedEdge();
-
-        secToLast.select(null, false);
-
+        
         rounds.remove(rounds.size() - 1);
         switchPlayerTurn();
         
         getActivePlayer().setUndoCount(1);
-        return unselected;
+        mementoCareTaker.restoreState(board);
+
     }
 
     private void switchPlayerTurn() {
@@ -164,6 +166,9 @@ public class Game {
         if (isFinished()) {
             return false;
         }
+        
+        
+        mementoCareTaker.saveState(board);
 
         triangleEdges = board.checkMove(getActivePlayer(), selected);
 
@@ -174,7 +179,7 @@ public class Game {
             getCurrentRound().select(selected.element(), true);
             end();
         }
-        
+
 
         return true;
     }

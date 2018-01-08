@@ -9,8 +9,8 @@ import tads.graph.model.Joint;
 
 public class EdgeLine extends Line {
 
-    private final Color DEFAULT_COLOR = Color.rgb(50, 50, 50);
-    private final Color HOVER_COLOR = Color.rgb(0, 0, 0);
+    private final Color DEFAULT_COLOR = Color.web("#a58d5e");
+    private final Color HOVER_COLOR = Color.web("#edd6aa");
 
     private final Color FIRST_SELECT_COLOR = Color.rgb(65, 135, 210);
     private final Color SECOND_SELECT_COLOR = Color.rgb(210, 40, 40);

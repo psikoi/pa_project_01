@@ -29,6 +29,8 @@ public class GameView extends Pane implements View {
 
     public GameView(Game game) {
 
+        setStyle("-fx-background-color: #e6c990;");
+        
         this.game = game;
 
         this.edgeLines = new ArrayList<>();
@@ -39,7 +41,9 @@ public class GameView extends Pane implements View {
         }
 
         for (Vertex<Joint> vertex : game.getBoard().getGraph().vertices()) {
-            getChildren().add(new Circle(vertex.element().getX(), vertex.element().getY(), 5));
+            Circle c = new Circle(vertex.element().getX(), vertex.element().getY(), 5);
+            c.setFill(Color.web("#a58d5e"));
+            getChildren().add(c);
         }
 
         undoButton = new Button("Undo move");

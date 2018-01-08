@@ -5,6 +5,10 @@ import game.models.Game;
 import game.models.Machine;
 import graphics.Presenter;
 import graphics.views.GameView;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
 import tads.graph.Edge;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;
@@ -50,7 +54,7 @@ public class GamePresenter implements Presenter {
 
         executePlay(cgame.getNextMove());
         cgame.setThinking(false);
-        /*
+        
 
         Timer delay = new Timer();
 
@@ -66,13 +70,13 @@ public class GamePresenter implements Presenter {
                 });
             }
 
-        }, 500 + new Random().nextInt(1000));*/
+        }, 500 + new Random().nextInt(1000));
     }
 
     public void undoPlay() {
         Connection undo = model.undoMove();
         if (undo != null) {
-            view.changeUndo(model.canUndo(model.getInactivePlayer()));
+            view.changeUndo(model.canUndo(model.getActivePlayer()));
             view.undoEdge(undo);
         }
 

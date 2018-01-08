@@ -17,7 +17,7 @@ public class Game {
     private ArrayList<Round> rounds;
 
     private int activePlayerIndex;
-    
+
     private int maxWidth;
 
     private ArrayList<Edge<Connection, Joint>> triangleEdges;
@@ -26,7 +26,7 @@ public class Game {
 
         this.board = new Board(maxWidth);
         this.level = level;
-        
+
         this.maxWidth = maxWidth;
 
         this.player1 = player1;
@@ -102,7 +102,6 @@ public class Game {
 
     }
 
-    
     public Player getActivePlayer() {
         return activePlayerIndex == 0 ? player1 : player2;
     }
@@ -112,37 +111,22 @@ public class Game {
     }
 
     public boolean canUndo(Player player) {
-
-        if (rounds.size() < 2 || player.equals(getActivePlayer())) {
-            return false;
-        }
-
-        int emptyRounds = 0;
-
-        for (Round round : rounds) {
-
-            if (round.getPlayer().equals(player) && round.getSelectedEdge() == null) {
-                emptyRounds++;
-            }
-        }
-
-        return emptyRounds == 0;
-
+       return player.getUndoCount() == 0;
     }
 
     public void start() {
-        board.generate(level + 5);
-        rounds.add(new Round(player1));
+        this.player1.setUndoCount(0);
+        this.player2.setUndoCount(0);
+        
+        this.board.generate(level + 5);
+        
+        this.rounds.clear();
+        this.rounds.add(new Round(player1));
     }
 
     public void skipRound() {
         rounds.add(new Round(getInactivePlayer()));
-
-        if (activePlayerIndex == 1) {
-            activePlayerIndex = 0;
-        } else {
-            activePlayerIndex++;
-        }
+        switchPlayerTurn();
     }
 
     public Connection undoMove() {
@@ -159,12 +143,24 @@ public class Game {
         Connection unselected = secToLast.getSelectedEdge();
 
         secToLast.select(null, false);
+
+        rounds.remove(rounds.size() - 1);
+        switchPlayerTurn();
+        
+        getActivePlayer().setUndoCount(1);
         return unselected;
+    }
+
+    private void switchPlayerTurn() {
+        if (activePlayerIndex == 1) {
+            activePlayerIndex = 0;
+        } else {
+            activePlayerIndex++;
+        }
     }
 
     public boolean play(Edge<Connection, Joint> selected) {
 
-        
         if (isFinished()) {
             return false;
         }
@@ -177,8 +173,8 @@ public class Game {
         } else {
             getCurrentRound().select(selected.element(), true);
             end();
-
         }
+        
 
         return true;
     }
@@ -195,6 +191,4 @@ public class Game {
         return maxWidth;
     }
 
-    
-    
 }

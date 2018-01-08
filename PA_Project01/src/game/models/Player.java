@@ -1,7 +1,8 @@
 package game.models;
 
 
- import java.io.Serializable;
+import game.statistics.*;
+import java.io.Serializable;
 
 
 /**
@@ -17,19 +18,19 @@ public class Player implements Serializable{
     /**
      * Statistics about this player.
      */
-    private int gamesPlayed, totalVictories, totalLosses, bestScore;
-    private long timePlayed;
+    protected EasyStatistics easyStatistics = new EasyStatistics();
+    protected HardStatistics hardStatistics = new HardStatistics();
     
     private int playerIndex;
+    
 
     /**
      * Returns the number of games this player has played.
      * 
      * @return number of games played by the player.
      */
-    public int getGamesPlayed() {
-        return gamesPlayed;
-        //teste
+    public int getEasyGamesPlayed() {
+        return easyStatistics.getGamesPlayed();
     }
 
     /**
@@ -37,37 +38,37 @@ public class Player implements Serializable{
      * 
      * @param gamesPlayed new value of games played.
      */
-    public void setGamesPlayed(int gamesPlayed) {
-        this.gamesPlayed = gamesPlayed;
+    public void setEasyGamesPlayed(int gamesPlayed) {
+        this.easyStatistics.setGamesPlayed(gamesPlayed);
     }
     
     
-    public void addGamePlayed(){
-        this.gamesPlayed++;
+    public void addEasyGamePlayed(){
+        easyStatistics.addGamePlayed();
     }
     
-    public int getTotalLosses(){
-        return totalLosses;
+    public int getEasyLosses(){
+        return easyStatistics.getLosses();
     }
     
-    public void addLoss(){
-        totalLosses++;
+    public void addEasyLoss(){
+        easyStatistics.addLoss();
     }
     
-    public void setLosses(int losses){
-        this.totalLosses = losses;
+    public void setEasyLosses(int losses){
+        easyStatistics.setLosses(losses);
     }
     
-    public long getTimePlayed(){
-        return timePlayed;
+    public long getEasyTimePlayed(){
+        return easyStatistics.getTimePlayed();
     }
     
-    public void addTimePlayed(long time){
-        timePlayed += time;
+    public void addEasyTimePlayed(long time){
+        easyStatistics.addTimePlayed(time);
     }
     
-    public void setTimePlayed(long time){
-        timePlayed = time;
+    public void setEasyTimePlayed(long time){
+        easyStatistics.setTimePlayed(time);
     }
 
     /**
@@ -75,40 +76,72 @@ public class Player implements Serializable{
      * 
      * @return number of victories of a player. 
      */
-    public int getTotalVictories() {
-        return totalVictories;
+    public int getEasyVictories() {
+        return easyStatistics.getVictories();
     }
 
     /**
      * Sets the number of total victories to the specified one.
      * 
-     * @param totalVictories new value of total victories.
+     * @param victories new value of total victories.
      */
-    public void setTotalVictories(int totalVictories) {
-        this.totalVictories = totalVictories;
+    public void setEasyVictories(int victories) {
+        easyStatistics.setVictories(victories);
     }
 
-    public void addVictory(){
-        this.totalVictories++;
+    public void addEasyVictory(){
+        easyStatistics.addVictory();
     }
     
-    /**
-     * Returns the best score of a player.
-     * 
-     * @return player's best score.
-     */
-    public int getBestScore() {
-        return bestScore;
+    
+     public int getHardGamesPlayed() {
+        return hardStatistics.getGamesPlayed();
     }
 
-    /**
-     * Sets the best score to the specified one.
-     * 
-     * @param bestScore new value of the best score of a player.
-     */
-    public void setBestScore(int bestScore) {
-        this.bestScore = bestScore;
+    public void setHardGamesPlayed(int gamesPlayed) {
+        this.hardStatistics.setGamesPlayed(gamesPlayed);
     }
+    
+    public void addHardGamePlayed(){
+        hardStatistics.addGamePlayed();
+    }
+    
+    public int getHardLosses(){
+        return hardStatistics.getLosses();
+    }
+    
+    public void addHardLoss(){
+        hardStatistics.addLoss();
+    }
+    
+    public void setHardLosses(int losses){
+        hardStatistics.setLosses(losses);
+    }
+    
+    public long getHardTimePlayed(){
+        return hardStatistics.getTimePlayed();
+    }
+    
+    public void addHardTimePlayed(long time){
+        hardStatistics.addTimePlayed(time);
+    }
+    
+    public void setHardTimePlayed(long time){
+        hardStatistics.setTimePlayed(time);
+    }
+
+    public int getHardVictories() {
+        return hardStatistics.getVictories();
+    }
+
+    public void setHardVictories(int victories) {
+        hardStatistics.setVictories(victories);
+    }
+
+    public void addHardVictory(){
+        hardStatistics.addVictory();
+    }
+    
     
     public int getPlayerIndex() {
         return playerIndex;

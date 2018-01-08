@@ -17,11 +17,19 @@ public interface MachineDAO {
 
     boolean insert(Machine machine);
 
-    boolean addGamePlayed();
+    boolean addEasyGamePlayed();
     
-    boolean addVictory();
+    boolean addEasyVictory();
     
-    boolean addLoss();
+    boolean addEasyLoss();
     
-    boolean addTimePlayed(long time);
+    boolean addEasyTimePlayed(long time);
+    
+    boolean addHardGamePlayed();
+    
+    boolean addHardVictory();
+    
+    boolean addHardLoss();
+    
+    boolean addHardTimePlayed(long time);
 }

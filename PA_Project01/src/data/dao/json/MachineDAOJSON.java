@@ -53,12 +53,12 @@ public class MachineDAOJSON implements MachineDAO{
     }
 
     @Override
-    public boolean addGamePlayed() {
+    public boolean addEasyGamePlayed() {
         Machine machine = data.get("Machine");
         if(machine == null)
             return false;
         
-        machine.addGamePlayed();
+        machine.addEasyGamePlayed();
         
         data.replace("Machine", machine);
         save();
@@ -67,13 +67,13 @@ public class MachineDAOJSON implements MachineDAO{
     }
 
     @Override
-    public boolean addVictory() {
+    public boolean addEasyVictory() {
         Machine machine = data.get("Machine");
         if(machine == null){
             return false;
         }
         
-        machine.addVictory();
+        machine.addEasyVictory();
         
         data.replace("Machine", machine);
         save();
@@ -82,13 +82,13 @@ public class MachineDAOJSON implements MachineDAO{
     }
     
     @Override
-    public boolean addLoss(){
+    public boolean addEasyLoss(){
         Machine machine = data.get("Machine");
         if(machine == null){
             return false;
         }
         
-        machine.addLoss();
+        machine.addEasyLoss();
         
         data.replace("Machine", machine);
         
@@ -98,13 +98,13 @@ public class MachineDAOJSON implements MachineDAO{
     }
     
     @Override
-    public boolean addTimePlayed(long time){
+    public boolean addEasyTimePlayed(long time){
         Machine machine = data.get("Machine");
         if(machine == null){
             return false;
         }
         
-        machine.addTimePlayed(time);
+        machine.addEasyTimePlayed(time);
         
         data.replace("Machine", machine);
         
@@ -112,6 +112,68 @@ public class MachineDAOJSON implements MachineDAO{
         
         return true;
     }
+    
+     @Override
+    public boolean addHardGamePlayed() {
+        Machine machine = data.get("Machine");
+        if(machine == null)
+            return false;
+        
+        machine.addHardGamePlayed();
+        
+        data.replace("Machine", machine);
+        save();
+        
+        return true;
+    }
+
+    @Override
+    public boolean addHardVictory() {
+        Machine machine = data.get("Machine");
+        if(machine == null){
+            return false;
+        }
+        
+        machine.addHardVictory();
+        
+        data.replace("Machine", machine);
+        save();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addHardLoss(){
+        Machine machine = data.get("Machine");
+        if(machine == null){
+            return false;
+        }
+        
+        machine.addHardLoss();
+        
+        data.replace("Machine", machine);
+        
+        save();
+        
+        return true;
+    }
+    
+    @Override
+    public boolean addHardTimePlayed(long time){
+        Machine machine = data.get("Machine");
+        if(machine == null){
+            return false;
+        }
+        
+        machine.addHardTimePlayed(time);
+        
+        data.replace("Machine", machine);
+        
+        save();
+        
+        return true;
+    }
+
     
     private Map<String, Machine> loadAll() {
         File file = new File(MACHINE_FILE);
@@ -152,5 +214,7 @@ public class MachineDAOJSON implements MachineDAO{
             Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE, e.getMessage());
         }
     }
+
+    
     
 }

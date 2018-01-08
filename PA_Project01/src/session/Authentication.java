@@ -49,25 +49,7 @@ public class Authentication {
         SessionManager.getUserSessions().add(session);
     }
 
-    /**
-     * Allows a user to logout of their account. Throws exceptions if an error
-     * occurs in the logging out process.
-     * 
-     * @param username - Username.
-     */
-    public static void logout(String username) {
-        //se a conta não existir
-        if (!checkIfUserExists(username)) {
-            throw new NoUserFoundException();
-        }
-        
-        //se a conta não tiver a sessão iniciada
-        if (!checkIfUserLoggedIn(username)) {
-            throw new NotLoggedInException();
-        }
 
-        SessionManager.removeSession(username);
-    }
 
     /**
      * Allows a user to register an account. Uses the DataHandler to save the account

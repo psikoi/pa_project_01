@@ -26,8 +26,7 @@ public class AccountOptionsMenu extends VBox {
     private BackButton back;
     private StyledButton statistics;
     private StyledButton computerStatistics;
-    private StyledButton logout;
-
+    
     public AccountOptionsMenu(String username) {
 
         setSpacing(10);
@@ -37,7 +36,6 @@ public class AccountOptionsMenu extends VBox {
 
         statistics = new StyledButton("Estatisticas", 150);
         computerStatistics = new StyledButton("Estatisticas do computador", 150);
-        logout = new StyledButton("Logout", 150);
 
         statistics.setOnAction((event) -> {
             Main.switchContent(new UserStatisticsOptions(username));
@@ -47,14 +45,6 @@ public class AccountOptionsMenu extends VBox {
             Main.switchContent(new ComputerStatisticsOptions(username));
         });
 
-        logout.setOnAction(e -> {
-            try {
-                Main.switchContent(new HomeScreenMenu());
-                Authentication.logout(username);
-            } catch (RuntimeException exception) {
-                alertLogoutFailure(exception.getMessage());
-            }
-        });
 
         back = new BackButton(new Runnable() {
             @Override
@@ -70,25 +60,9 @@ public class AccountOptionsMenu extends VBox {
 
         statistics.setTranslateY(-30);
         computerStatistics.setTranslateY(-30);
-        logout.setTranslateY(-30);
-
         getChildren().add(topHbox);
         getChildren().add(statistics);
         getChildren().add(computerStatistics);
-        getChildren().add(logout);
-    }
-
-    public void alertLogoutFailure(String message) {
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Erro");
-        alert.setHeaderText("Ocorreu um erro ao terminar a sessão");
-         if(message == null)
-             message = "Por alguma razão desconhecida, o logout lança uma exceção que não está a ocorrer. O log out foi finalizado com sucesso";
-        alert.setContentText(message);
-       
-
-        alert.showAndWait();
     }
 
 }

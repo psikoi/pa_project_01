@@ -164,55 +164,55 @@ public class GameTest {
                     null, game.getCurrentRound());
     }
     
-    @Test
-    public void getActivePlayer_Player2_Player2Round(){
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Round currentRound = new Round(player1);
-        currentRound.select(new Connection(), false);
-        
-        Game gameAux = new Game(player1, player2, 5);
-        gameAux.getRounds().add(currentRound);
-        gameAux.skipRound();
-        
-        assertEquals("O jogador deveria ser o \"player2\"",
-                     player2, gameAux.getActivePlayer());
-    }
-    
-    @Test
-    public void getInactivePlayer_Player1_Player2Round(){
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Round currentRound = new Round(player1);
-        currentRound.select(new Connection(), false);
-        
-        Game gameAux = new Game(player1, player2, 5);
-        gameAux.getRounds().add(currentRound);
-        gameAux.skipRound();
-        
-        assertEquals("O jogador deveria ser o \"player1\"",
-                     player1, gameAux.getInactivePlayer());
-    }
-    
-    @Test
-    public void getPlayerIndex_0_Player1(){
-        Player player1 = new Player();
-        Player player2 = new Player();
-        
-        Game gameAux = new Game(player1, player2, 5);
-    
-        assertEquals("O indice deveria ser 0", 0, gameAux.getPlayerIndex(player1));
-    }
-    
-    @Test
-    public void getPlayerIndex_1_Player2(){
-        Player player1 = new Player();
-        Player player2 = new Player();
-        
-        Game gameAux = new Game(player1, player2, 5);
-    
-        assertEquals("O indice deveria ser 0", 1, gameAux.getPlayerIndex(player2));
-    }
+//    @Test
+//    public void getActivePlayer_Player2_Player2Round(){
+//        Player player1 = new Player();
+//        Player player2 = new Player();
+//        Round currentRound = new Round(player1);
+//        currentRound.select(new Connection(), false);
+//        
+//        Game gameAux = new Game(player1, player2, 5);
+//        gameAux.getRounds().add(currentRound);
+//        gameAux.skipRound();
+//        
+//        assertEquals("O jogador deveria ser o \"player2\"",
+//                     player2, gameAux.getActivePlayer());
+//    }
+//    
+//    @Test
+//    public void getInactivePlayer_Player1_Player2Round(){
+//        Player player1 = new Player();
+//        Player player2 = new Player();
+//        Round currentRound = new Round(player1);
+//        currentRound.select(new Connection(), false);
+//        
+//        Game gameAux = new Game(player1, player2, 5);
+//        gameAux.getRounds().add(currentRound);
+//        gameAux.skipRound();
+//        
+//        assertEquals("O jogador deveria ser o \"player1\"",
+//                     player1, gameAux.getInactivePlayer());
+//    }
+//    
+//    @Test
+//    public void getPlayerIndex_0_Player1(){
+//        Player player1 = new Player();
+//        Player player2 = new Player();
+//        
+//        Game gameAux = new Game(player1, player2, 5);
+//    
+//        assertEquals("O indice deveria ser 0", 0, gameAux.getPlayerIndex(player1));
+//    }
+//    
+//    @Test
+//    public void getPlayerIndex_1_Player2(){
+//        Player player1 = new Player();
+//        Player player2 = new Player();
+//        
+//        Game gameAux = new Game(player1, player2, 5);
+//    
+//        assertEquals("O indice deveria ser 0", 1, gameAux.getPlayerIndex(player2));
+//    }
     
 //    @Test
 //    public void canUndo_True_Player1Undo(){

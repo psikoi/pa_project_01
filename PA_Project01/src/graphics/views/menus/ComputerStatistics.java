@@ -5,7 +5,7 @@
  */
 package graphics.views.menus;
 
-import converter.TimeToStringConverter;
+import utils.TimeUtils;
 import data.DataHandler;
 import game.Main;
 import game.models.Machine;
@@ -79,7 +79,7 @@ public class ComputerStatistics extends VBox{
                 pieChart = new PieChart(pieChartData);
                 pieChart.setTitle("Estatisticas Dificuldade Fácil");
                 
-                timePlayed.setText(TimeToStringConverter.getTimePlayed(machine.getEasyTimePlayed()));
+                timePlayed.setText(TimeUtils.getTimePlayed(machine.getEasyTimePlayed()));
                 
         }else if(difficulty.equalsIgnoreCase("hard")){
             ObservableList<PieChart.Data> pieChartData =
@@ -91,7 +91,7 @@ public class ComputerStatistics extends VBox{
                 pieChart = new PieChart(pieChartData);
                 pieChart.setTitle("Estatisticas Dificuldade Difícil");
                 
-                timePlayed.setText(TimeToStringConverter.getTimePlayed(machine.getHardTimePlayed()));
+                timePlayed.setText(TimeUtils.getTimePlayed(machine.getHardTimePlayed()));
                 
         }
     }

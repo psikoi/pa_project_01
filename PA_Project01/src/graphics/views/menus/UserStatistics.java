@@ -5,7 +5,7 @@
  */
 package graphics.views.menus;
 
-import converter.TimeToStringConverter;
+import utils.TimeUtils;
 import data.DataHandler;
 import game.Main;
 import game.models.Machine;
@@ -83,7 +83,7 @@ public class UserStatistics extends VBox {
             pieChart = new PieChart(pieChartData);
             pieChart.setTitle("Estatisticas Dificuldade Fácil");
             
-            timePlayed.setText(TimeToStringConverter.getTimePlayed(user.getEasyTimePlayed()));
+            timePlayed.setText(TimeUtils.getTimePlayed(user.getEasyTimePlayed()));
             gamesPlayed.setText("Jogos jogados: " + user.getEasyGamesPlayed());
             
         } else if (difficulty.equalsIgnoreCase("hard")) {
@@ -95,7 +95,7 @@ public class UserStatistics extends VBox {
             pieChart = new PieChart(pieChartData);
             pieChart.setTitle("Estatisticas Dificuldade Difícil");
             
-            timePlayed.setText(TimeToStringConverter.getTimePlayed(user.getHardTimePlayed()));
+            timePlayed.setText(TimeUtils.getTimePlayed(user.getHardTimePlayed()));
             gamesPlayed.setText("Jogos jogados: " + user.getHardGamesPlayed());
             
         } else if (difficulty.equalsIgnoreCase("player")) {
@@ -107,7 +107,7 @@ public class UserStatistics extends VBox {
             pieChart = new PieChart(pieChartData);
             pieChart.setTitle("Estatisticas Jogador vs Jogador");
             
-            timePlayed.setText(TimeToStringConverter.getTimePlayed(user.getPVPTimePlayed()));
+            timePlayed.setText(TimeUtils.getTimePlayed(user.getPVPTimePlayed()));
             gamesPlayed.setText("Jogos jogados: " + user.getPVPGamesPlayed());
             
         }

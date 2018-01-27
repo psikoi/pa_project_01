@@ -1,4 +1,4 @@
-package converter;
+package utils;
 
 /**
  * TimeToStringConverter contains a static method that converts milliseconds into
@@ -7,7 +7,7 @@ package converter;
  * @author Tiago
  * @author Ruben
  */
-public class TimeToStringConverter {
+public class TimeUtils {
     
     public static String getTimePlayed(long time) {
         Integer seconds = (int) (time / 1000) % 60;

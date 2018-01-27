@@ -33,8 +33,7 @@ public class TutorialGame extends ComputerGame{
     public boolean play(Edge<Connection, Joint> selected) {
         return super.play(selected); 
         
-        //dependo do getRounds().size (nº de ronda)
-        //fazer certas açoes
+        //Unimplemented
         
     }
     

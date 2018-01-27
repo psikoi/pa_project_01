@@ -3,9 +3,15 @@ package game.memento;
 import game.models.Board;
 import java.util.Stack;
 
+/**
+ * A standart memento pattern class that holds serves as the Care Taker.
+ * 
+ * @author Ruben
+ * @author Tiago
+ */
 public class BoardMementoCareTaker {
 
-    Stack<BoardMemento> boardMementos;
+    private Stack<BoardMemento> boardMementos;
 
     public BoardMementoCareTaker() {
         this.boardMementos = new Stack<>();
@@ -24,4 +30,8 @@ public class BoardMementoCareTaker {
         board.setMemento(memento);
     }
 
+    
+    
+    
+    
 }

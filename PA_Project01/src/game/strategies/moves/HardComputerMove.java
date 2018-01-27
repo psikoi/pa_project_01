@@ -20,13 +20,36 @@ import tads.graph.model.Joint;
 import tads.tree.LinkedTree;
 import tads.tree.Position;
 
+/**
+ *
+ * @author Ruben
+ */
 public class HardComputerMove implements ComputerMoveStrategy {
 
+    /*
+     The simulated player index, this is used to simulate alternating player
+     moves.d
+     */
     private int simPlayerIndex;
 
+    /**
+     * This method will calculate the best possible move on a given game. It
+     * uses trees to calculate every move possibility, evaluates every possible
+     * path, organizes the possibilities by score and chooses the best at end.
+     *
+     * If all ramining moves are loosing moves, it will choose the first
+     * available.
+     *
+     * @param game (The current game state)
+     * @return (The best possible move)
+     */
     @Override
     public Edge<Connection, Joint> calculateMove(Game game) {
 
+        /*
+         To avoid longer trees in the beginning moves, the first move is
+         completely random.
+         */
         if (game.getRounds().size() < 3) {
             ArrayList<Edge<Connection, Joint>> possibleMoves = game.getBoard().getPossibleMoves();
             return possibleMoves.get(new Random().nextInt(possibleMoves.size()));
@@ -40,19 +63,24 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
         Position<Board> root = tree.root();
 
+        /*
+         Recursively adds the subtrees of root.
+         */
         addSubtrees(tree, root, game);
-
-        long h = System.currentTimeMillis();
 
         int treeHeight = tree.height();
 
         ArrayList<BoardScorePair> toInsert = new ArrayList<>();
 
         for (Position<Board> board : tree.depthOrder()) {
+            
+            /*
+               Evaluates each path to all the external nodes.
+            */
             if (tree.isExternal(board)) {
 
                 toInsert = new ArrayList<>();
-                
+
                 int height = treeHeight;
                 Position<Board> current = board;
 
@@ -61,19 +89,22 @@ public class HardComputerMove implements ComputerMoveStrategy {
                     height--;
                     current = tree.parent(current);
                 }
-                
-                
-                for(BoardScorePair pair : toInsert){
+
+                for (BoardScorePair pair : toInsert) {
                     results.put(pair.getBoard(), pair.getScore());
                 }
 
             }
         }
-        
-        
 
+        /*
+         Sorts the results Map by score (lower to higher)
+        */
         results = sortByScore(results);
 
+        /*
+          Given the ordered results, chooses the best scored possible move.
+        */
         for (Map.Entry<Position<Board>, Integer> entry : results.entrySet()) {
 
             Position<Board> prev = null;
@@ -99,6 +130,22 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
     }
 
+    /**
+     *
+     * This method evaluates a current node's score. If the current node
+     * is a loosing node, it will clear the list (path) to avoid the computer
+     * pursuing an eventually loosing path. (Some paths score better even
+     * if they have a loosing node in the middle)
+     * 
+     * Score weights:
+     * - Winning = 1
+     * - Loosing = 100
+     * - Default = 25
+     * 
+     * The score is then determined by the weight * tree height.
+     * 
+     * @return (The node's score)
+     */
     public int evaluate(LinkedTree<Board> tree, Position<Board> parent, int height, ArrayList<BoardScorePair> list) {
         int score = 25 * height;
 
@@ -111,7 +158,6 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
         ArrayList<Edge<Connection, Joint>> edges = parent.element().checkMove(p, toCheck);
 
-
         if (!edges.isEmpty()) {
 
             if (edges.get(0).element().getSelector() instanceof Machine) {
@@ -123,13 +169,16 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
         }
 
-        
         list.add(new BoardScorePair(parent, score));
-        
+
         return score;
 
     }
 
+    /*
+      Determines the difference between two boards, to know which edge was
+      selected in between the two.
+    */
     private Edge<Connection, Joint> difference(Board a, Board b) {
 
         for (Edge<Connection, Joint> edge : a.getGraph().edges()) {
@@ -146,6 +195,10 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
     }
 
+    /**
+     * Recursively adds a subtree to a node.
+     * Alternates the simulated player index for every node.
+     */
     public void addSubtrees(LinkedTree<Board> tree, Position<Board> parent, Game game) {
 
         for (Edge<Connection, Joint> possibleMove : parent.element().getPossibleMoves()) {
@@ -179,10 +232,19 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
     }
 
+    /*
+      Returns the game's player that matches the simulated player index.
+    */
     private Player getSimulatedPlayer(Game game) {
         return simPlayerIndex % 2 == 0 ? game.getActivePlayer() : game.getInactivePlayer();
     }
 
+    /**
+     * Sorts a map by it's Value (Integer), from lower to higher.
+     * 
+     * @param unsortMap (Unsorted current map)
+     * @return (Sorted map)
+     */
     private Map<Position<Board>, Integer> sortByScore(Map<Position<Board>, Integer> unsortMap) {
 
         List<Map.Entry<Position<Board>, Integer>> list
@@ -204,6 +266,9 @@ public class HardComputerMove implements ComputerMoveStrategy {
 
     }
 
+    /**
+     * This class holds a relation between a board and it's score.
+     */
     private class BoardScorePair {
 
         private Position<Board> board;
@@ -221,8 +286,6 @@ public class HardComputerMove implements ComputerMoveStrategy {
         public int getScore() {
             return score;
         }
-        
-        
 
     }
 

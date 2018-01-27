@@ -11,6 +11,15 @@ import tads.graph.model.Joint;
 
 public class EasyComputerMove implements ComputerMoveStrategy {
 
+    private Random random;
+    
+    public EasyComputerMove() {
+        this.random = new Random();
+    }
+
+    
+    
+    
     @Override
     public Edge<Connection, Joint> calculateMove(Game game) {
         return getRandomMove(game);
@@ -27,7 +36,7 @@ public class EasyComputerMove implements ComputerMoveStrategy {
         ArrayList<Edge<Connection, Joint>> possibleMoves = board.getPossibleMoves();
         
         if (!possibleMoves.isEmpty()) {
-            return possibleMoves.get(new Random().nextInt(possibleMoves.size()));
+            return possibleMoves.get(random.nextInt(possibleMoves.size()));
         }
 
         return null;

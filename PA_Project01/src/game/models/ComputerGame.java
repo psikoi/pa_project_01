@@ -7,6 +7,12 @@ import tads.graph.Edge;
 import tads.graph.model.Connection;
 import tads.graph.model.Joint;
 
+/**
+ * Represents a Player vs Computer game.
+ * 
+ * @author Ruben
+ * @author Tiago
+ */
 public class ComputerGame extends Game {
     
     private ComputerMoveStrategy moveStrategy;
@@ -16,8 +22,12 @@ public class ComputerGame extends Game {
         super(player1, machine, level, maxWidth);
         this.moveStrategy  = new ComputerMoveStrategyFactory().create(difficulty);
     }
-
-
+    
+    /**
+     * Calculates the next computer move, based on the ComputerMoveStrategy's decision.
+     * 
+     * @return (The next move)
+     */
     public Edge<Connection, Joint> getNextMove() {
         return moveStrategy.calculateMove(this);
     }

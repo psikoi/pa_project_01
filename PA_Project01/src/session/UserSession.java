@@ -9,6 +9,7 @@ import game.models.User;
  * @author Tiago
  */
 public class UserSession {
+    
     private User user;
     
     public UserSession(User user){
@@ -17,5 +18,9 @@ public class UserSession {
     
     public User getUser(){
         return user;
+    }
+    
+    public boolean usernameMatches(String username){
+        return username != null && this.user != null && username.equalsIgnoreCase(user.getPassword());
     }
 }

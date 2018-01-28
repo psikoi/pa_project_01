@@ -25,15 +25,15 @@ public class UserStatisticsOptions extends ComputerStatisticsOptions{
             Main.switchContent(new UserStatistics(username, "player"));
         });
         
-        easy.setOnAction(e -> {
+        getEasy().setOnAction(e -> {
             Main.switchContent(new UserStatistics(username, "easy"));
         });
         
-        hard.setOnAction(e -> {
+        getHard().setOnAction(e -> {
             Main.switchContent(new UserStatistics(username, "hard"));
         });
         
-        topHbox.setTranslateY(-215);
+        translateHbox(-215);
         
         player.setTranslateY(-30);
         

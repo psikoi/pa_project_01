@@ -1,5 +1,11 @@
 package tads.graph.model;
 
+/**
+ * The Data Class bad smell in this class is unavoidable as it's just
+ * a generic type to be used to display coordinates on screen.
+ * 
+ * @author Ruben
+ */
 public class Joint {
 
     private int x, y;

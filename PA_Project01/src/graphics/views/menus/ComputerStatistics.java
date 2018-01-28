@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics.views.menus;
 
 import utils.TimeUtils;
 import data.DataHandler;
 import game.Main;
 import game.models.Machine;
-import game.models.User;
 import graphics.custom.BackButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,8 +20,7 @@ import javafx.scene.text.FontWeight;
  * @author Tiago
  */
 public class ComputerStatistics extends VBox{
-    private BackButton back;
-    private PieChart pieChart;
+    
     private Label timePlayedText;
     private Label timePlayed;
     
@@ -46,9 +39,9 @@ public class ComputerStatistics extends VBox{
         timePlayed.setAlignment(Pos.CENTER);
         timePlayed.setFont(Font.font("Arial", FontWeight.BOLD, 18));
 
-        makePieChart(difficulty);
+        PieChart pieChart = makePieChart(difficulty);
         
-        back = new BackButton(new Runnable() {
+        BackButton back = new BackButton(new Runnable() {
             @Override
             public void run() {
                 Main.switchContent(new ComputerStatisticsOptions(username));
@@ -66,7 +59,9 @@ public class ComputerStatistics extends VBox{
         getChildren().addAll(topHbox, pieChart, timePlayedText, timePlayed);
     }
     
-    private void makePieChart(String difficulty){
+    private PieChart makePieChart(String difficulty){
+        
+        PieChart pieChart = null;
         Machine machine = DataHandler.getMachine();
         
         if(difficulty.equalsIgnoreCase("easy")){
@@ -94,5 +89,7 @@ public class ComputerStatistics extends VBox{
                 timePlayed.setText(TimeUtils.getTimePlayed(machine.getHardTimePlayed()));
                 
         }
+        
+        return pieChart;
     }
 }

@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
  * @author Tiago
  */
 public class LoginMenu extends VBox{
+    
     private SingleLoginMenu loginMenu;
     private BackButton back;
     private HBox topHbox;
@@ -27,7 +28,7 @@ public class LoginMenu extends VBox{
         
         loginMenu = new SingleLoginMenu();
         
-         back = new BackButton(new Runnable() {
+        back = new BackButton(new Runnable() {
             @Override
             public void run() {
                 Main.switchContent(new PlayerTypeSelectionMenu());
@@ -52,7 +53,6 @@ public class LoginMenu extends VBox{
         back.setOnAction(e -> {
             Main.switchContent(new HomeScreenMenu());
         });
-        
         
         topHbox.setTranslateY(-150);
         

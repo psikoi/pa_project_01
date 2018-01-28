@@ -1,9 +1,7 @@
 package graphics.views.menus;
 
-import static com.sun.glass.ui.Application.run;
 import game.Main;
 import game.models.User;
-import graphics.custom.BackButton;
 import graphics.custom.SmallStyledButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,7 +15,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -28,13 +25,13 @@ import session.SessionManager;
 
 public class SingleLoginMenu extends VBox {
 
-    SmallStyledButton loginButton;
-    SmallStyledButton selectButton;
+    private SmallStyledButton loginButton;
+    private SmallStyledButton selectButton;
 
-    TextField usernameField;
-    PasswordField passwordField;
+    private TextField usernameField;
+    private PasswordField passwordField;
 
-    ComboBox<String> userSelection;
+    private ComboBox<String> userSelection;
 
     private VBox selectionContainer;
 
@@ -74,7 +71,7 @@ public class SingleLoginMenu extends VBox {
         Pane spacer = new Pane();
         spacer.setPrefSize(20, 20);
 
-        loginButton = new SmallStyledButton("Entrar", 180);
+        SmallStyledButton loginButton = new SmallStyledButton("Entrar", 180);
         loginButton.setOnAction((event) -> {
 
             if (login()) {

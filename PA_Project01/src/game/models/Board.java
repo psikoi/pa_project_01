@@ -11,6 +11,9 @@ import tads.graph.model.Joint;
 /**
  * Represents a game's board.
  * 
+ * ATTENTION: The Inappropriate intimacy bad smell @getGraph() is unavoidable to properly comply
+ * with the Memento Design Pattern.
+ * 
  * @author Ruben
  * @author Tiago
  */

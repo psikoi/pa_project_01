@@ -77,7 +77,7 @@ public class Authentication {
     private static boolean checkIfUserLoggedIn(String username) {
 
         for (UserSession userSession : SessionManager.getUserSessions()) {
-            if (userSession.getUser().getUsername().equalsIgnoreCase(username)) {
+            if (userSession.usernameMatches(username)) {
                 return true;
             }
         }
@@ -91,7 +91,6 @@ public class Authentication {
      */
     private static boolean checkIfUserExists(String username) {
         User aux = DataHandler.selectUser(username);
-
         return aux != null;
     }
 }

@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics.custom;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -17,15 +10,10 @@ import javafx.scene.input.MouseEvent;
  */
 public class BackButton extends Button {
 
-    private Image image;
-    private ImageView imageView;
-
     public BackButton(Runnable action) {
         super();
 
-        image = new Image("/images/icon_arrow_back.png");
-
-        imageView = new ImageView(image);
+        ImageView imageView = new ImageView(new Image("/images/icon_arrow_back.png"));
         imageView.setFitHeight(30);
         imageView.setFitWidth(30);
 
@@ -46,12 +34,12 @@ public class BackButton extends Button {
             run(action);
         });
     }
-    
-    private void run(Runnable action){
+
+    private void run(Runnable action) {
         action.run();
     }
-    
-    public void changeAction(Runnable action){
+
+    public void changeAction(Runnable action) {
         setOnAction(e -> {
             run(action);
         });

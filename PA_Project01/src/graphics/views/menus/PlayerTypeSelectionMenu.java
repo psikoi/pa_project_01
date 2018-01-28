@@ -12,10 +12,6 @@ import javafx.scene.text.FontWeight;
 
 public class PlayerTypeSelectionMenu extends VBox {
 
-    private BackButton back;
-    private StyledButton user;
-    private StyledButton computer;
-
     public PlayerTypeSelectionMenu() {
         setSpacing(30);
         setStyle("-fx-background-color: #e6c990;");
@@ -26,8 +22,8 @@ public class PlayerTypeSelectionMenu extends VBox {
         HBox hbox = new HBox(20);
         hbox.setAlignment(Pos.CENTER);
 
-        user = new StyledButton("Utilizador", 150);
-        computer = new StyledButton("Computador", 150);
+        StyledButton user = new StyledButton("Utilizador", 150);
+        StyledButton computer = new StyledButton("Computador", 150);
 
         user.setOnAction((event) -> {
             Main.switchContent(new DoubleLoginMenu());
@@ -37,7 +33,7 @@ public class PlayerTypeSelectionMenu extends VBox {
             Main.switchContent(new LoginMenu());
         });
 
-        back = new BackButton(new Runnable() {
+        BackButton back = new BackButton(new Runnable() {
             @Override
             public void run() {
                 Main.switchContent(new HomeScreenMenu());

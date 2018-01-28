@@ -3,13 +3,12 @@ package graphics.custom;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class SmallStyledButton extends Button {
 
-    public boolean clickable;
+    private boolean clickable;
 
     public SmallStyledButton(String text) {
         this(text, -1);
@@ -26,20 +25,14 @@ public class SmallStyledButton extends Button {
 
         setStyle("-fx-background-color: #932e32;");
 
-        setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                if (clickable) {
-                    setOpacity(0.6);
-                }
+        setOnMouseEntered((event) -> {
+            if (clickable) {
+                setOpacity(0.6);
             }
         });
 
-        setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                setOpacity(1);
-            }
+        setOnMouseExited((event) -> {
+            setOpacity(1);
         });
 
         setPadding(new Insets(10, 5, 10, 5));
@@ -49,12 +42,12 @@ public class SmallStyledButton extends Button {
         this.clickable = clickable;
         setDisable(!clickable);
     }
-    
-    private void run(Runnable action){
+
+    private void run(Runnable action) {
         action.run();
     }
-    
-    public void changeAction(Runnable action){
+
+    public void changeAction(Runnable action) {
         setOnAction(e -> {
             run(action);
         });

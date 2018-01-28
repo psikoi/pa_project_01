@@ -1,8 +1,5 @@
 package game.models;
 
-import data.dao.json.UserDAOJSON;
-import game.statistics.EasyStatistics;
-import game.statistics.HardStatistics;
 import game.statistics.PVPStatistics;
 
 /** This class represents an User. It extends from Player, allowing it to take

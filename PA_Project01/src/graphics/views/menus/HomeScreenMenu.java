@@ -9,29 +9,18 @@ import javafx.scene.layout.VBox;
 
 public class HomeScreenMenu extends VBox {
 
-    private Image img;
-    private ImageView logoImgView;
-
-    private StyledButton play;
-    private StyledButton register;
-    private StyledButton login;
-    private StyledButton account;
-    private StyledButton tutorial;
-
     public HomeScreenMenu() {
 
         setSpacing(10);
 
-        img = new Image("/images/logo.png");
-
         setStyle("-fx-background-color: #e6c990;");
         setAlignment(Pos.CENTER);
 
-        play = new StyledButton("Jogar", 150);
-        register = new StyledButton("Registar", 150);
-        login = new StyledButton("Login", 150);
-        account = new StyledButton("Conta", 150);
-        tutorial = new StyledButton("Tutorial", 150);
+        StyledButton play = new StyledButton("Jogar", 150);
+        StyledButton register = new StyledButton("Registar", 150);
+        StyledButton login = new StyledButton("Login", 150);
+        StyledButton account = new StyledButton("Conta", 150);
+        StyledButton tutorial = new StyledButton("Tutorial", 150);
 
         tutorial.setDisable(true);
 
@@ -56,7 +45,7 @@ public class HomeScreenMenu extends VBox {
         
         
 
-        getChildren().add(new ImageView(img));
+        getChildren().add(new ImageView(new Image("/images/logo.png")));
 
         getChildren().add(play);
         getChildren().add(register);

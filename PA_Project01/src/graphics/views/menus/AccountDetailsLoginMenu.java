@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics.views.menus;
 
 import game.Main;
@@ -14,8 +9,11 @@ import session.SessionManager;
  * @author Tiago
  */
 public class AccountDetailsLoginMenu extends LoginMenu{
+    
     public AccountDetailsLoginMenu(){
+        
         super();
+        
         super.getSingleLoginMenu().getLoginButton().setOnAction(e -> {
             String username;
             username = super.getSingleLoginMenu().getUsername();
@@ -24,7 +22,7 @@ public class AccountDetailsLoginMenu extends LoginMenu{
             }
         });
         
-        super.getSingleLoginMenu().selectButton.setOnAction(e -> {
+        super.getSingleLoginMenu().getSelectButton().setOnAction(e -> {
             User s = SessionManager.getLoggedInUsers().get(super.getSingleLoginMenu().getUserSelection().getSelectionModel().getSelectedIndex());
             
             if (s != null) {

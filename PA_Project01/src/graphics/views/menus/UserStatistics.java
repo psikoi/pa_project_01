@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics.views.menus;
 
 import utils.TimeUtils;
 import data.DataHandler;
 import game.Main;
-import game.models.Machine;
 import game.models.User;
 import graphics.custom.BackButton;
 import javafx.collections.FXCollections;
@@ -27,9 +21,6 @@ import javafx.scene.text.FontWeight;
  */
 public class UserStatistics extends VBox {
 
-    private BackButton back;
-    private PieChart pieChart;
-    private Label timePlayedText;
     private Label timePlayed;
     private Label gamesPlayed;
 
@@ -43,7 +34,7 @@ public class UserStatistics extends VBox {
         gamesPlayed.setAlignment(Pos.CENTER);
         gamesPlayed.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         
-        timePlayedText = new Label();
+        Label timePlayedText = new Label();
         timePlayedText.setAlignment(Pos.CENTER);
         timePlayedText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         timePlayedText.setText("Tempo jogado:");
@@ -52,9 +43,9 @@ public class UserStatistics extends VBox {
         timePlayed.setAlignment(Pos.CENTER);
         timePlayed.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         
-        makePieChart(username, difficulty);
+        PieChart pieChart = makePieChart(username, difficulty);
 
-        back = new BackButton(new Runnable() {
+        BackButton back = new BackButton(new Runnable() {
             @Override
             public void run() {
                 Main.switchContent(new UserStatisticsOptions(username));
@@ -71,8 +62,9 @@ public class UserStatistics extends VBox {
         getChildren().addAll(topHbox, pieChart, gamesPlayed, timePlayedText, timePlayed);
     }
 
-    private void makePieChart(String username, String difficulty) {
+    private PieChart makePieChart(String username, String difficulty) {
         User user = DataHandler.selectUser(username);
+        PieChart pieChart = null;
         
         if (difficulty.equalsIgnoreCase("easy")) {
             ObservableList<PieChart.Data> pieChartData
@@ -111,6 +103,7 @@ public class UserStatistics extends VBox {
             gamesPlayed.setText("Jogos jogados: " + user.getPVPGamesPlayed());
             
         }
+        return pieChart;
     }
 
 }

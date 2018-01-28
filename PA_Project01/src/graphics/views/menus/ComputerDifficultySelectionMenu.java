@@ -17,10 +17,6 @@ import javafx.scene.text.FontWeight;
 
 public class ComputerDifficultySelectionMenu extends VBox {
 
-    private BackButton back;
-    private StyledButton easy;
-    private StyledButton hard;
-
     public ComputerDifficultySelectionMenu() {
 
         setSpacing(30);
@@ -33,8 +29,8 @@ public class ComputerDifficultySelectionMenu extends VBox {
         HBox hbox = new HBox(20);
         hbox.setAlignment(Pos.CENTER);
 
-        easy = new StyledButton("Fácil", 150);
-        hard = new StyledButton("Difícil", 150);
+        StyledButton easy = new StyledButton("Fácil", 150);
+        StyledButton hard = new StyledButton("Difícil", 150);
 
         easy.setOnAction((event) -> {
             startGame(new GameFactory().create(GameDifficulty.EASY));
@@ -43,15 +39,14 @@ public class ComputerDifficultySelectionMenu extends VBox {
         hard.setOnAction((event) -> {
             startGame(new GameFactory().create(GameDifficulty.HARD));
         });
-        
-        back = new BackButton(new Runnable() {
+
+        BackButton back = new BackButton(new Runnable() {
             @Override
             public void run() {
                 Main.switchContent(new LoginMenu());
             }
         });
-        
-        
+
         HBox topHbox = new HBox();
         topHbox.getChildren().add(back);
         topHbox.setMaxHeight(20);
@@ -62,14 +57,14 @@ public class ComputerDifficultySelectionMenu extends VBox {
         hbox.setTranslateY(-50);
 
         question.setTranslateY(-50);
-        
+
         getChildren().add(topHbox);
         getChildren().add(question);
         getChildren().add(hbox);
 
     }
-    
-    private void startGame(Game game){
+
+    private void startGame(Game game) {
         game.start();
         GamePresenter p = new GamePresenter(game, new GameView(game));
         Main.switchContent(p.getView());

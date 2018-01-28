@@ -3,7 +3,6 @@ package graphics.views.menus;
 import game.Main;
 import game.factories.GameFactory;
 import game.models.Game;
-import game.models.GameDifficulty;
 import graphics.custom.BackButton;
 import graphics.presenters.GamePresenter;
 import graphics.views.GameView;
@@ -16,9 +15,8 @@ import session.SessionManager;
 
 public class DoubleLoginMenu extends HBox {
 
-    private BackButton back; 
-    public int loginActions;
-    public int automaticLogin;
+    private  int loginActions;
+    private int automaticLogin;
 
     public DoubleLoginMenu() {
 
@@ -43,9 +41,7 @@ public class DoubleLoginMenu extends HBox {
                 loginActions++;
                 leftMenu.setReady();
                 checkReady();
-            }// else {
-             //   leftMenu.alertLoginFailure();
-            //}
+            }
         });
 
         rightMenu.getLoginButton().setOnAction((event) -> {
@@ -53,9 +49,7 @@ public class DoubleLoginMenu extends HBox {
                 loginActions++;
                 rightMenu.setReady();
                 checkReady();
-            } //else {
-               // rightMenu.alertLoginFailure();
-            //}
+            }
         });
 
         leftMenu.getSelectButton().setOnAction((event) -> {
@@ -88,7 +82,7 @@ public class DoubleLoginMenu extends HBox {
             checkReady();
         });
         
-        back = new BackButton(new Runnable() {
+        BackButton back = new BackButton(new Runnable() {
             @Override
             public void run() {
                 Main.switchContent(new PlayerTypeSelectionMenu());
@@ -124,11 +118,9 @@ public class DoubleLoginMenu extends HBox {
     }
 
     private void checkReady() {
-
         if (loginActions >= 2 && SessionManager.getUserSessions().size() == 2) {
             startGame(new GameFactory().create(null));
         }
-
     }
 
     private boolean checkSamePlayer(SingleLoginMenu left, SingleLoginMenu right) {

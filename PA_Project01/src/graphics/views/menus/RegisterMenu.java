@@ -28,13 +28,9 @@ import session.Authentication;
  */
 public class RegisterMenu extends VBox {
 
-    private BackButton back;
-
     private TextField usernameField;
     private PasswordField passwordField;
     private TextField emailField;
-
-    SmallStyledButton registerButton;
 
     public RegisterMenu() {
         setSpacing(30);
@@ -77,7 +73,7 @@ public class RegisterMenu extends VBox {
         emailField.setMinHeight(35);
         emailField.setStyle("-fx-focus-color: #bebebe ; -fx-faint-focus-color: #bebebe ;");
 
-        registerButton = new SmallStyledButton("Registar", 180);
+        SmallStyledButton registerButton = new SmallStyledButton("Registar", 180);
         registerButton.setOnAction((event) -> {
 
             if (register()) {
@@ -87,7 +83,7 @@ public class RegisterMenu extends VBox {
 
         });
         
-        back = new BackButton(new Runnable() {
+        BackButton back = new BackButton(new Runnable() {
             @Override
             public void run() {
                 Main.switchContent(new HomeScreenMenu());

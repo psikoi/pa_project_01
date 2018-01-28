@@ -5,7 +5,7 @@ import game.models.Board;
 /**
  * A standart memento pattern class that holds a Board object.
  * 
- * ATTENTION: The Data Class bad smell is unavoidable to properly comply
+ * ATTENTION: The Data Class/Inappropriate intimacy bad smells are unavoidable to properly comply
  * with the Memento Design Pattern.
  * 
  * @author Ruben
